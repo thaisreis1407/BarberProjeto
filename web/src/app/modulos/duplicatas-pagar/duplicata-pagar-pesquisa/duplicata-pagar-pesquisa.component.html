@@ -1,0 +1,124 @@
+<div class="container">
+  <form autocomplete="off">
+    <div class="ui-g" style="margin-top: -15px;">
+      <div id="titulo" class="ui-g-12" style="margin-bottom: -20px; margin-top: -20">
+        <h2>Contas a Pagar</h2>
+      </div>
+
+      <div class="ui-g-6 ui-md-6 ui-lg-4 ui-fluid">
+        <label>Fornecedor</label>
+        <p-dropdown emptyFilterMessage="" [options]="listaFornecedores"
+          name="cmbFornecedor"
+          [(ngModel)]="filtro.idFornecedor"
+          [filter]="true"
+          placeholder="Todos">
+        </p-dropdown>
+      </div>
+
+      <div class="ui-g-6 ui-md-3 ui-lg-2 ui-fluid">
+        <label>Dt. Início Compra</label>
+        <p-calendar dateFormat="dd/mm/yy" [inline]="false" ngModel
+          name="txtDataInicio"
+          [readonlyInput]="true" appendTo="body" [showButtonBar]="true"
+          [monthNavigator]="true" [yearNavigator]="true"
+          yearRange="1930:2030" [locale]="cfgPtBr"
+          [(ngModel)]="filtro.dataVencimentoInicio">
+        </p-calendar>
+      </div>
+
+      <div class="ui-g-6 ui-md-3 ui-lg-2 ui-fluid">
+        <label>Dt. Final Compra</label>
+        <p-calendar dateFormat="dd/mm/yy" [inline]="false" ngModel
+          name="txtDataFim" [locale]="cfgPtBr"
+          [readonlyInput]="true" appendTo="body" [showButtonBar]="true"
+          [monthNavigator]="true" [yearNavigator]="true"
+          yearRange="1930:2030"
+          [(ngModel)]="filtro.dataVencimentoFim">
+        </p-calendar>
+      </div>
+
+      <div class="ui-g-6 ui-md-3 ui-lg-2 ui-fluid">
+        <label>Dt. Início Vencimento</label>
+        <p-calendar dateFormat="dd/mm/yy" [inline]="false" ngModel
+          name="txtDataInicioVencimento"
+          [readonlyInput]="true" appendTo="body" [showButtonBar]="true"
+          [monthNavigator]="true" [yearNavigator]="true"
+          yearRange="1930:2030" [locale]="cfgPtBr"
+          [(ngModel)]="filtro.dataVencimentoInicio">
+        </p-calendar>
+      </div>
+
+      <div class="ui-g-6 ui-md-3 ui-lg-2 ui-fluid">
+        <label>Dt. Final Vencimento</label>
+        <p-calendar dateFormat="dd/mm/yy" [inline]="false" ngModel
+          name="txtDataFimVencimento" [locale]="cfgPtBr"
+          [readonlyInput]="true" appendTo="body" [showButtonBar]="true"
+          [monthNavigator]="true" [yearNavigator]="true"
+          yearRange="1930:2030"
+          [(ngModel)]="filtro.dataVencimentoFim">
+        </p-calendar>
+      </div>
+
+      <div class="ui-g-12 ui-md-4 ui-lg-4" [style.text-align]="'start'">
+          <label class="label-button">&#160;</label>
+        <button pButton (click)="consultar()" label="Buscar" class="ui-button-secondary" icon="pi pi-search">
+        </button>
+        <button pButton label="Inserir" [disabled]="!auth.temPermissao('ROLE_INSERIR_DUPLICATA_PAGAR')"
+          icon="pi pi-file" routerLink="/duplicatasPagar/novo">
+        </button>
+        </div>
+    </div>
+
+    <div class="ui-g">
+      <div class="ui-g-12">
+        <p-table [value]="duplicatasPagar" [rows]="filtro.itensPorPagina" [paginator]="true" #grid [responsive]="true"
+          [lazy]="true" [totalRecords]="totalRegistros" (onLazyLoad)="aoMudarPagina($event)">
+
+          <ng-template pTemplate="header">
+            <tr>
+              <th class="col-id font-grid">Id</th>
+              <th class="col-data font-grid">Dt. Compra</th>
+              <th class="col-data font-grid">Dt. Venc.</th>
+              <th class="col-center font-grid">Fornecedor</th>
+              <th class="col-valor font-grid">Valor</th>
+              <th class="col-acoes1 font-grid" style="text-align: start"></th>
+            </tr>
+          </ng-template>
+
+          <ng-template pTemplate="body" let-contaPagar>
+            <tr>
+              <td class="col-id font-grid">
+                <span class="ui-column-title">Id:</span>{{contaPagar.id | zeroEsquerda: '6'}}
+              </td>
+
+              <td class="col-data font-grid">
+                <span class="ui-column-title">Data Compra:</span>{{contaPagar.dataCompra | date: 'dd/MM/yyyy'}}
+              </td>
+
+              <td class="col-data font-grid">
+                <span class="ui-column-title">Data Venc.:</span>{{contaPagar.dataVencimento | date: 'dd/MM/yyyy'}}
+              </td>
+
+              <td class="col-left font-grid" style="width: 100px">
+                <span class="ui-column-title">Fornecedor:</span>{{contaPagar.nomeFornecedor}}
+              </td>
+
+              <td class="col-valor font-grid">
+                <span class="ui-column-title">Valor:</span>{{contaPagar.valor | number: '1.2-2'}}
+              </td>
+
+              <td class="col-acoes1 font-grid" style="padding: 2px; text-align: start">
+                <p-menu #menu [popup]="true" [model]="acaoItens"
+                  appendTo="body"></p-menu>
+                <button pButton type="button" title="Opções" class="ui-button-primary"
+                  icon="pi pi-cog" (click)="acoesDropDownClick(contaPagar.id); menu.toggle($event);"
+                  class="botao-pequeno">
+                </button>
+              </td>
+            </tr>
+          </ng-template>
+        </p-table>
+      </div>
+    </div>
+  </form>
+</div>

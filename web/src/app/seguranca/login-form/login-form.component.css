@@ -1,0 +1,13 @@
+#div-principal{
+  display: flex;
+  align-items: center;
+}
+
+form {
+  border-width: 1px;
+  border-style: solid;
+  border-color: #bebebe;
+  border-radius: 4px;
+  padding: 10px;
+  background-color: #f1f1f1
+}

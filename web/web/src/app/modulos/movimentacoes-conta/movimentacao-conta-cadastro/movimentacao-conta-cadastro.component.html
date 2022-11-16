@@ -1,0 +1,78 @@
+<div class="container" style="height: 100%">
+    <form autocomplete="false" #frmMovimentacaoConta="ngForm" name="frmMovimentacaoConta"
+      (ngSubmit)="confirmarDados(frmMovimentacaoConta)" >
+      <div class="ui-g" style="margin-top: -15px;">
+        <div id="titulo" class="ui-g-12" style="margin-bottom: -15px; margin-top: -20">
+          <h2>{{ editando ? ( modoConsulta ? 'Consultando' : 'Alterando ') : 'Inserindo' }} Movimentação de conta</h2>
+        </div>
+      </div>
+
+      <div class="ui-g" style="margin-top: -5px;">
+
+        <div class="ui-g-6 ui-md-2 ui-lg-2 ui-fluid">
+          <label>Conta*</label>
+          <p-dropdown emptyFilterMessage="" [options]="listaContas" [disabled]="modoConsulta"
+            name="cmbPerfil" [required]="true"
+            [(ngModel)]="movimentacaoConta.conta"
+            [filter]="true"
+            placeholder="Selecione">
+          </p-dropdown>
+        </div>
+
+        <div class="ui-g-6 ui-md-2 ui-lg-2 ui-fluid">
+          <label>Tipo*</label>
+          <p-dropdown emptyFilterMessage=""
+            [options]="[ {label:'Débito', value: 'D'}, {label:'Crédito', value: 'C'} ]"
+            [disabled]="modoConsulta"
+            name="cmbTipo"  [required]="true"
+            [(ngModel)]="movimentacaoConta.tipo" ngModel
+            placeholder="Selecione">
+          </p-dropdown>
+        </div>
+
+        <div class="ui-g-6 ui-md-1 ui-lg-1 ui-fluid">
+          <label>Valor*</label>
+          <input pInputText text="text" name="txtValor" [(ngModel)]="movimentacaoConta.valor"
+            [disabled]="modoConsulta" maxlength=40  [required]="true"
+            currencyMask [options]="{ prefix: '', precision :2, thousands: '.', decimal: ',', allowNegative: false }">
+        </div>
+
+        <div class="ui-g-6 ui-md-2 ui-lg-2 ui-fluid">
+          <label>Data Movimento*</label>
+          <p-calendar dateFormat="dd/mm/yy" [inline]="false" ngModel
+            name="txtDataMovimento" [locale]="cfgPtBr"  [required]="true"
+            [readonlyInput]="true" appendTo="body" [showButtonBar]="true"
+            [disabled]="modoConsulta" [monthNavigator]="true" [yearNavigator]="true"
+            yearRange="1930:2030"
+            [(ngModel)]="movimentacaoConta.dataMovimentacao">
+          </p-calendar>
+        </div>
+
+        <div class="ui-g-12 ui-md-7 ui-lg-7 ui-fluid">
+          <label>Descrição</label>
+          <input pInputText text="text" name="txtDescricao" [(ngModel)]="movimentacaoConta.descricao"
+            [disabled]="modoConsulta" maxlength=40>
+        </div>
+
+        <!-- <div class="ui-g-12 ui-md-6 ui-lg-6 ui-fluid">
+          <label style="display: block;">x</label>
+          <p-checkbox [(ngModel)]= "inativo" [binary]="true" name="padrao"
+          label = "Inativo">
+          </p-checkbox>
+        </div> -->
+
+      </div>
+
+      <div class="ui-g-12">
+        <button pButton #btnSalvar type="submit" label="Salvar" class="ui-button-success"
+          icon="pi pi-save"
+          pTooltip="Salvar" [disabled]="frmMovimentacaoConta.invalid"
+          *ngIf="!modoConsulta">
+        </button>
+
+        <button pButton type="button" label="Voltar" class="ui-button-secondary"
+          (click)="voltar()" icon="pi pi-chevron-circle-left">
+        </button>
+      </div>
+    </form>
+  </div>

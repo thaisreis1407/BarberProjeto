@@ -1,0 +1,258 @@
+<div class="container" style="height: 100%">
+    <form autocomplete="off" #frmAgendamento="ngForm" name="frmAgendamento"
+      (ngSubmit)="confirmarDados(frmAgendamento)" >
+      <div class="ui-g" style="margin-top: -15px;">
+        <div id="titulo" class="ui-g-12" style="margin-bottom: -15px; margin-top: -20">
+          <h2>{{ editando ? ( modoConsulta ? 'Consultando' : 'Alterando ') : 'Inserindo' }} Agendamento</h2>
+        </div>
+      </div>
+
+      <div class="ui-g-8 ui-md-3 ui-lg-2 ui-fluid">
+        <label>Data*</label>
+        <p-calendar dateFormat="dd/mm/yy" [inline]="false" ngModel
+          name="txtDataMovimento" [locale]="cfgPtBr"
+          [readonlyInput]="true" appendTo="body" [showButtonBar]="true"
+          [disabled]="modoConsulta" [monthNavigator]="true" [yearNavigator]="true"
+          yearRange="1930:2030" [required]="true"
+          [(ngModel)]="agendamento.data">
+        </p-calendar>
+      </div>
+
+      <div class="ui-g-4 ui-md-3 ui-lg-2 ui-fluid">
+        <label>Hora</label>
+        <p-calendar [inline]="false" ngModel
+          name="txtHora" [locale]="cfgPtBr"
+          [readonlyInput]="true" appendTo="body"
+          [disabled]="modoConsulta" [timeOnly]="true"
+          [stepMinute]="5" [required]="true"
+
+          [(ngModel)]="agendamento.hora">
+        </p-calendar>
+      </div>
+
+      <div class="ui-g-12 ui-md-6 ui-lg-2 ui-fluid">
+        <label>Status*</label>
+        <p-dropdown emptyFilterMessage=""
+          [options]="listaStatus"
+          [disabled]="modoConsulta || agendamento.status === 'A'"
+          name="cmbStatus" [required]="true"
+          [(ngModel)]="agendamento.status" ngModel
+          placeholder="Selecione">
+        </p-dropdown>
+      </div>
+
+      <div class="ui-g-12 ui-md-6 ui-lg-3 ui-fluid">
+        <label>Cliente</label>
+        <p-dropdown emptyFilterMessage="" [options]="listaClientes" [disabled]="modoConsulta"
+          name="cmbCliente" [showClear]="true"
+          [(ngModel)]="agendamento.cliente"
+          [filter]="true" [required]="true"
+          placeholder="Selecione">
+        </p-dropdown>
+      </div>
+
+      <div class="ui-g-12 ui-md-6 ui-lg-3 ui-fluid">
+        <label>Atendente</label>
+        <p-dropdown emptyFilterMessage="" [options]="listaAtendentes" [disabled]="modoConsulta"
+          name="cmbAtendente" [showClear]="true"
+          [(ngModel)]="agendamento.atendente"
+          [filter]="true" [required]="true"
+          placeholder="Selecione">
+        </p-dropdown>
+      </div>
+
+      <div class="ui-g-12 ui-md-12 ui-lg-12 ui-fluid">
+        <label>Observação</label>
+        <textarea pInputTextarea text="text" rows="1" name="txtObservacao"
+          [(ngModel)]="agendamento.observacao"
+          [disabled]="modoConsulta" >
+        </textarea>
+      </div>
+
+      <div *ngIf="agendamento.atendimento" class="ui-g-12" style="margin: 0; padding: 0;">
+
+        <div class="ui-g-12 ui-md-12 ui-lg-12 ui-fluid">
+          <hr style="margin: 2px" />
+          <label>Dados do Atendimento</label>
+        </div>
+<!--
+        <div class="ui-g-12 ui-md-3 ui-lg-3 ui-fluid" style="margin: 0; padding: 0;">
+          <div class="ui-g-7 ui-fluid">
+            <label>Dt Inicio</label>
+            <p-calendar dateFormat="dd/mm/yy" [inline]="false" ngModel name="txtDataAtInicio"
+              [locale]="cfgPtBr" [readonlyInput]="true" appendTo="body" [showButtonBar]="true"
+              [disabled]="modoConsulta || faturado()" [monthNavigator]="true" [yearNavigator]="true"
+              yearRange="1930:2030" [required]="!validaCamposAtendimento()"
+              [(ngModel)]="agendamento.atendimento.dataInicio">
+            </p-calendar>
+          </div>
+
+          <div class="ui-g-5 ui-fluid">
+            <label>Hr Inicio</label>
+            <p-calendar [inline]="false" ngModel name="txtAtHoraInicio" [locale]="cfgPtBr" [readonlyInput]="true"
+              appendTo="body" [disabled]="modoConsulta || faturado()" [timeOnly]="true" [stepMinute]="30"
+              [required]="true" (onFocus)="geraHoraInicio()" [(ngModel)]="agendamento.atendimento.horaInicio">
+            </p-calendar>
+          </div>
+        </div> -->
+        <!-- <div class="ui-g-12 ui-md-3 ui-lg-3 ui-fluid" style="margin: 0; padding: 0;">
+          <div class="ui-g-7 ui-fluid">
+            <label>Dt Fim</label>
+            <p-calendar dateFormat="dd/mm/yy" [inline]="false" ngModel name="txtDataAtFim"
+              [locale]="cfgPtBr" [readonlyInput]="true" appendTo="body" [showButtonBar]="true"
+              [disabled]="modoConsulta  || faturado()" [monthNavigator]="true" [yearNavigator]="true"
+              yearRange="1930:2030" [required]="!validaCamposAtendimento()"
+              [(ngModel)]="agendamento.atendimento.dataFim">
+            </p-calendar>
+          </div>
+
+          <div class="ui-g-5 ui-fluid">
+            <label>Hr Fim</label>
+            <p-calendar [inline]="false" ngModel
+              name="txtAtHoraFim" [locale]="cfgPtBr" [required]="true"
+              [readonlyInput]="true" appendTo="body"
+              [disabled]="modoConsulta || faturado()" [timeOnly]="true" [showButtonBar]="true"
+              [stepMinute]="30" [required]="!validaCamposAtendimento()"
+              (onFocus)="geraHoraFim()"
+              [(ngModel)]="agendamento.atendimento.horaFim">
+            </p-calendar>
+          </div>
+        </div> -->
+        <div class="ui-g-8 ui-md-4 ui-lg-4 ui-fluid">
+          <label>Forma Pagto</label>
+          <p-dropdown emptyFilterMessage=""
+            [options]="listaFormasPagamento"
+            [disabled]="modoConsulta || faturado()"
+            name="cmbFormaPagamento" [required]="agendamento.status==='F'"
+            [(ngModel)]="agendamento.atendimento.formaPagamento" ngModel
+            placeholder="Selecione" [showClear]="true">
+          </p-dropdown>
+        </div>
+
+        <div class="ui-g-4 ui-md-2 ui-lg-2 ui-fluid">
+          <label>Vr. Total</label>
+          <input pInputText text="text" name="txtValorTotal" [(ngModel)]="agendamento.atendimento.valorTotal"
+            [disabled]="true" maxlength=40
+            currencyMask [options]="{ prefix: '', precision :2, thousands: '.', decimal: ',', allowNegative: false }">
+        </div>
+
+        <div class="ui-g-12 ui-md-12 ui-lg-12 ui-fluid">
+          <hr style="margin: 2px" />
+        </div>
+
+        <div class="ui-g-12 ui-md-4 ui-lg-4 ui-fluid">
+          <label>Produto/Servico</label>
+          <p-dropdown emptyFilterMessage=""
+            [options]="listaProdutosServicos"
+            (onChange)="onChangeProduto()"
+            [disabled]="modoConsulta || faturado()" name="cmbProdutoServico"
+            [(ngModel)]="produtoSelecionado" ngModel
+            placeholder="Selecione">
+          </p-dropdown>
+        </div>
+
+        <div class="ui-g-4 ui-md-2 ui-lg-2 ui-fluid">
+          <label>Quantidade</label>
+          <input pInputText text="text" #txtQuantidade name="txtQuantidade" [(ngModel)]="quantidadeSelecionada"
+            [disabled]="modoConsulta || faturado()" maxlength=40 (blur)="calculaTotal()"
+            currencyMask [options]="{ prefix: '', precision :0, thousands: '.', decimal: ',', allowNegative: false }">
+        </div>
+
+        <div class="ui-g-4 ui-md-2 ui-lg-2 ui-fluid">
+          <label>Vr. Unitário</label>
+          <input pInputText text="text" name="txtValorUnitario" [(ngModel)]="valorUnitarioSelecionado"
+            [disabled]="modoConsulta || faturado()" maxlength=40 (blur)="calculaTotal()"
+            currencyMask [options]="{ prefix: '', precision :2, thousands: '.', decimal: ',', allowNegative: false }">
+        </div>
+
+        <div class="ui-g-4 ui-md-2 ui-lg-2 ui-fluid">
+          <label>Vr. Total</label>
+          <input pInputText text="text" name="txtValorTotalSelecionado" [(ngModel)]="valorTotalSelecionado"
+            [disabled]="true" maxlength=40
+            currencyMask [options]="{ prefix: '', precision :2, thousands: '.', decimal: ',', allowNegative: false }">
+        </div>
+
+        <div class="ui-g-4 ui-md-2 ui-lg-2" [style.text-align]="'start'">
+          <label style="display: block">&#160;</label>
+          <button type="button" pButton icon="pi pi-save" pTooltip="Salvar"
+            (click)="salvarItem()"
+            class="ui-button-success"
+            [disabled]="!produtoSelecionado || !quantidadeSelecionada  || faturado()">
+          </button>
+          &#160;
+          <button type="button" pButton (click)="novoItem()"
+            [disabled]="modoConsulta || faturado()" icon="pi pi-chevron-circle-left"
+            icon="pi pi-file" pTooltip="Novo">
+          </button>
+        </div>
+
+        <div class="ui-g-12">
+          <p-table [value]="agendamento.atendimento.atendimentoDetalhe"
+            [rows]="5" [paginator]="true" #grid [responsive]="false">
+
+            <ng-template pTemplate="header">
+              <tr>
+                <th class="col-id font-grid ui-p-4">Id</th>
+                <th class="col-left font-grid" >Produto/Serviço</th>
+                <th class="font-grid p-col-valor-responsivo">Qtde.</th>
+                <th class="font-grid ui-p-4 p-col-valor-responsivo" style="width: 100px">Vr. Unit</th>
+                <th class="font-grid p-col-valor-responsivo" style="width: 100px">Vr. Total</th>
+                <th class="col-acoes-3 font-grid" style="text-align: start"></th>
+              </tr>
+            </ng-template>
+
+            <ng-template pTemplate="body" let-detalhe>
+              <tr>
+                <td class="col-id font-grid ui-p-4">
+                  {{detalhe.produtoServico.id | zeroEsquerda: '6'}}
+                </td>
+
+                <td class="col-data font-grid">
+                  {{detalhe.produtoServico.descricao}}
+                </td>
+
+                <td class="col-right font-grid">
+                  {{detalhe.quantidade | number: '1.0-2'}}
+                </td>
+
+                <td class="col-right font-grid ui-p-4">
+                  {{detalhe.valorUnitario | number: '1.2-2'}}
+                </td>
+
+                <td class="col-right font-grid">
+                  {{detalhe.valorTotal | number: '1.2-2'}}
+                </td>
+
+                <td class="col-acoes-3" style="padding: 2px;">
+                  <button type="button" pButton class="botao-pequeno" icon="pi pi-pencil"
+                    pTooltip="Editar" tooltipPosition="top"
+                    [disabled]="modoConsulta || !auth.temPermissao('ROLE_ALTERAR_AGENDAMENTO')|| faturado()"
+                    (click)="alterarItem(detalhe)">
+                  </button>
+                  &#160;
+                  <button type="button" pButton class="botao-pequeno ui-button-danger" icon="pi pi-trash"
+                    pTooltip="Excluir" tooltipPosition="top"
+                    (click)="excluirItem(detalhe)"
+                    [disabled]="modoConsulta || !auth.temPermissao('ROLE_EXCLUIR_AGENDAMENTO') || faturado()">
+                  </button>
+                </td>
+              </tr>
+            </ng-template>
+          </p-table>
+        </div>
+
+      </div>
+
+      <div class="ui-g-12">
+        <button pButton #btnSalvar type="submit" label="Salvar" class="ui-button-success"
+          icon="pi pi-save"
+          pTooltip="Salvar" [disabled]="frmAgendamento.invalid"
+          *ngIf="!modoConsulta">
+        </button>
+
+        <button pButton type="button" label="Voltar" class="ui-button-secondary"
+          (click)="voltar()" icon="pi pi-chevron-circle-left">
+        </button>
+      </div>
+    </form>
+  </div>

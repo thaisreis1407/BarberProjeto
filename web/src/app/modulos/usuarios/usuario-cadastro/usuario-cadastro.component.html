@@ -1,0 +1,50 @@
+<div class="container" style="height: 100%">
+    <form autocomplete="false" #frmUsuario="ngForm" name="frmUsuario"
+      (ngSubmit)="confirmarDados(frmUsuario)" >
+      <div class="ui-g" style="margin-top: -15px;">
+        <div id="titulo" class="ui-g-12" style="margin-bottom: -15px; margin-top: -20">
+          <h2>{{ editando ? ( modoConsulta ? 'Consultando' : 'Alterando ') : 'Inserindo' }}  Usuário</h2>
+        </div>
+      </div>
+      <div class="ui-g" style="margin-top: -5px;">
+        <div class="ui-g-12 ui-md-6 ui-lg-6 ui-fluid">
+          <label>Login*</label>
+          <input pInputText text="text" name="txtLogin" [(ngModel)]="usuario.login"
+            [disabled]="modoConsulta" maxlength=40 appAutofocus [required]="true">
+        </div>
+
+        <div class="ui-g-12 ui-md-6 ui-lg-6 ui-fluid">
+          <label>Perfil*</label>
+          <p-dropdown emptyFilterMessage="" [options]="perfis" [disabled]="modoConsulta"
+            name="cmbPerfil" [required]="true"
+            [(ngModel)]="usuario.perfil" ngModel
+            placeholder="Selecione">
+          </p-dropdown>
+        </div>
+
+        <div class="ui-g-6 ui-md-3 ui-lg-3 ui-fluid">
+          <label>Senha*</label>
+          <input pInputText type="password" name="txtSenha"
+            [disabled]="modoConsulta" [(ngModel)]="senha" ngModel [required]="true">
+        </div>
+
+        <div class="ui-g-6 ui-md-3 ui-lg-3 ui-fluid">
+          <label>Confirmação*</label>
+          <input pInputText type="password" name="txtConfirmacao"
+            [disabled]="modoConsulta" [(ngModel)]="confirmacaoSenha" ngModel [required]="true">
+        </div>
+      </div>
+
+      <div class="ui-g-12">
+        <button pButton #btnSalvar type="submit" label="Salvar" class="ui-button-success"
+          icon="pi pi-save"
+          pTooltip="Salvar" [disabled]="frmUsuario.invalid"
+          *ngIf="!modoConsulta">
+        </button>
+
+        <button pButton type="button" label="Voltar" class="ui-button-secondary"
+          (click)="voltar()" icon="pi pi-chevron-circle-left">
+        </button>
+      </div>
+    </form>
+  </div>

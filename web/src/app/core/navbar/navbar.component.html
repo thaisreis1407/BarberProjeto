@@ -1,0 +1,54 @@
+<nav class="navbar">
+  <div class="container-nav">
+    <div class="ui-g">
+      <div class="ui-g-12" style="padding-bottom: 0px">
+        <div class="navebar-botao">
+          <a *ngIf="!auth.isAccessTokenInvalido()"  href="javascript:;" class="navbar-toggle" (click)="exibindoMenu = !exibindoMenu">
+            <i class="pi pi-bars"></i>
+          </a>
+        </div>
+
+        <div class="navebar-botao-right"
+          style="margin-left: -6px; margin-right: 0px; margin-top: 9px;">
+            <a *ngIf="!auth.isAccessTokenInvalido() && utilService.agendaDoDia > 0"
+              class="navbar-toggle" routerLink="/agendas">
+              <span>
+                ({{utilService.agendaDoDia}})
+              </span>
+            </a>
+        </div>
+
+        <div class="navebar-botao-right" style="margin-right: 0px">
+          <a *ngIf="!auth.isAccessTokenInvalido() && utilService.agendaDoDia > 0"
+            class="navbar-toggle" routerLink="/agendas">
+            <span class="pi pi-info-circle">
+            </span>
+          </a>
+        </div>
+        <div class="navebar-titulo">
+          <span>Barber</span>
+        </div>
+      </div>
+
+      <div class="ui-g-12" style="padding: 3px">
+        <p-progressBar mode="indeterminate" [style]="{'height': '2px'}"
+          *ngIf="auth.mostrarStatus">
+        </p-progressBar>
+        <p-blockUI [blocked]="auth.mostrarStatus"></p-blockUI>
+        <div style="height: 2px; color: white; padding: 0px"
+          *ngIf="!auth.mostrarStatus">
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>
+<p-sidebar [style]="{ width: '18em', padding: '0px', overflowX: 'hidden', overflowY: 'auto' }"
+  [(visible)]="exibindoMenu" [baseZIndex]="10000"
+  [showCloseIcon]="false" [blockScroll]="true">
+  <div class="navbar-usuario"
+    (click)="exibindoMenu = !exibindoMenu">
+    {{auth.jwtPayload?.user_name}}
+  </div>
+  <p-panelMenu [model]="menuItens"
+    [multiple]="false" [style]="{width:'18em', padding:'2px', zIndex: '10000'}"></p-panelMenu>
+</p-sidebar>

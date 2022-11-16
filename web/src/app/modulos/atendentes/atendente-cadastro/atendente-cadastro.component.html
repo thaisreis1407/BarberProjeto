@@ -1,0 +1,53 @@
+<div class="container" style="height: 100%">
+    <form autocomplete="false" #frmAtendente="ngForm" name="frmAtendente"
+      (ngSubmit)="confirmarDados(frmAtendente)" >
+      <div class="ui-g" style="margin-top: -15px;">
+        <div id="titulo" class="ui-g-12" style="margin-bottom: -15px; margin-top: -20">
+          <h2>{{ editando ? ( modoConsulta ? 'Consultando' : 'Alterando ') : 'Inserindo' }} Atendente</h2>
+        </div>
+      </div>
+
+      <div class="ui-g" style="margin-top: -5px;">
+
+        <div class="ui-g-12 ui-md-6 ui-lg-6 ui-fluid">
+          <label>Nome*</label>
+          <input pInputText text="text" name="txtNome" [(ngModel)]="atendente.nome"
+            [disabled]="modoConsulta" maxlength=40 appAutofocus [required]="true">
+        </div>
+
+        <div class="ui-g-6 ui-md-3 ui-lg-3 ui-fluid">
+          <label>Conta</label>
+            <p-dropdown emptyFilterMessage="" [options]="listaContas" [disabled]="modoConsulta"
+            name="cmbPerfil" [required]="true"
+            [(ngModel)]="atendente.conta"
+            [filter]="true"
+            placeholder="Selecione">
+          </p-dropdown>
+        </div>
+        <div class="ui-g-6 ui-md-2 ui-lg-2 ui-fluid">
+          <label>Inativo</label>
+          <p-dropdown emptyFilterMessage=""
+            [options]="[ {label:'Sim', value: true}, {label:'Não', value: false} ]"
+            [disabled]="modoConsulta"
+            name="cmbInativo" [required]="true"
+            [(ngModel)]="atendente.inativo" ngModel
+            placeholder="Selecione">
+          </p-dropdown>
+        </div>
+      </div>
+
+
+
+      <div class="ui-g-12">
+        <button pButton #btnSalvar type="submit" label="Salvar" class="ui-button-success"
+          icon="pi pi-save"
+          pTooltip="Salvar" [disabled]="frmAtendente.invalid"
+          *ngIf="!modoConsulta">
+        </button>
+
+        <button pButton type="button" label="Voltar" class="ui-button-secondary"
+          (click)="voltar()" icon="pi pi-chevron-circle-left">
+        </button>
+      </div>
+    </form>
+  </div>

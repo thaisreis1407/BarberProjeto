@@ -1,0 +1,86 @@
+<div class="container" style="height: 100%">
+    <form autocomplete="false" #frmAgendamento="ngForm" name="frmAgendamento"
+      (ngSubmit)="confirmarDados(frmAgendamento)" >
+      <div class="ui-g" style="margin-top: -15px;">
+        <div id="titulo" class="ui-g-12" style="margin-bottom: -15px; margin-top: -20">
+          <h2>{{ editando ? ( modoConsulta ? 'Consultando' : 'Alterando ') : 'Inserindo' }} Agendamento</h2>
+        </div>
+      </div>
+
+      <div class="ui-g-6 ui-md-2 ui-lg-2 ui-fluid">
+        <label>Data*</label>
+        <p-calendar dateFormat="dd/mm/yy" [inline]="false" ngModel
+          name="txtDataMovimento" [locale]="cfgPtBr"
+          [readonlyInput]="true" appendTo="body" [showButtonBar]="true"
+          required="true" [disabled]="modoConsulta || bloqueiaAgendamentoAgenda()"
+          [monthNavigator]="true" [yearNavigator]="true"
+          yearRange="1930:2030"
+          [(ngModel)]="agendamento.data">
+        </p-calendar>
+      </div>
+
+      <div class="ui-g-6 ui-md-2 ui-lg-2 ui-fluid">
+        <label>Hora</label>
+        <p-calendar [inline]="false" ngModel
+          name="txtHora" [locale]="cfgPtBr"
+          required="true"
+          [readonlyInput]="true" appendTo="body"
+          [disabled]="modoConsulta || bloqueiaAgendamentoAgenda()" [timeOnly]="true"
+          [stepMinute]="30"
+          (onFocus)="geraHoraInicio()"
+          [(ngModel)]="agendamento.hora">
+        </p-calendar>
+      </div>
+
+      <div class="ui-g-12 ui-md-3 ui-lg-3 ui-fluid">
+        <label>Status*</label>
+        <p-dropdown emptyFilterMessage=""
+        required="true"
+          [options]="[ {label:'Agendado', value: 'A'}, {label:'Concluído', value: 'C'} ]"
+          [disabled]="modoConsulta || bloqueiaAgendamentoAgenda()"
+          name="cmbStatus" [required]="true"
+          [(ngModel)]="agendamento.status" ngModel
+          placeholder="Selecione">
+        </p-dropdown>
+      </div>
+
+      <div class="ui-g-12 ui-md-5 ui-lg-5 ui-fluid">
+        <label>Cliente</label>
+        <p-dropdown emptyFilterMessage="" [options]="listaClientes" [disabled]="modoConsulta"
+          name="cmbCliente" [showClear]="true"
+          required="true" [(ngModel)]="agendamento.cliente"
+          [filter]="true" appendTo="body"
+          placeholder="Selecione">
+        </p-dropdown>
+      </div>
+
+      <div class="ui-g-12 ui-md-4 ui-lg-4 ui-fluid">
+        <label>Atendente</label>
+        <p-dropdown emptyFilterMessage="" [options]="listaAtendentes"
+          name="cmbPerfil" [showClear]="true"
+          [(ngModel)]="agendamento.atendente"
+          [disabled]="modoConsulta || bloqueiaAgendamentoAgenda()"
+          [filter]="true" appendTo="body"
+          placeholder="Selecione">
+        </p-dropdown>
+      </div>
+
+      <div class="ui-g-12 ui-md-8 ui-lg-8 ui-fluid">
+        <label>Observação</label>
+        <input pInputText text="text" name="txtObservacao" [(ngModel)]="agendamento.observacao"
+          [disabled]="modoConsulta" maxlength=40 >
+      </div>
+
+      <div class="ui-g-12">
+        <button pButton #btnSalvar type="submit" label="Salvar" class="ui-button-success"
+          icon="pi pi-save"
+          pTooltip="Salvar" [disabled]="frmAgendamento.invalid"
+          *ngIf="!modoConsulta">
+        </button>
+
+        <button pButton type="button" label="Voltar" class="ui-button-secondary"
+          (click)="voltar()" icon="pi pi-chevron-circle-left">
+        </button>
+      </div>
+    </form>
+  </div>

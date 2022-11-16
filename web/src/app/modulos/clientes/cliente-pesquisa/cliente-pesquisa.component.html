@@ -1,0 +1,126 @@
+<div class="container">
+  <form autocomplete="off">
+    <div class="ui-g" style="margin-top: -15px;">
+      <div id="titulo" class="ui-g-12" style="margin-bottom: -20px; margin-top: -20">
+        <h2>Clientes</h2>
+      </div>
+
+      <div class="ui-g-12 ui-md-6 ui-lg-6 ui-fluid">
+        <label>Nome</label>
+        <input pInputText text="text" name="txtNome" [(ngModel)]="filtro.nome"
+          appAutofocus maxlength=100>
+      </div>
+
+      <div class="ui-g-6 ui-md-3 ui-lg-3 ui-fluid">
+        <label>Telefone</label>
+        <p-inputMask text="text" name="txtTelefone" [(ngModel)]="filtro.telefone"
+           mask="(99)9999-9999"></p-inputMask>
+      </div>
+
+      <div class="ui-g-6 ui-md-3 ui-lg-3 ui-fluid">
+        <label>Celular</label>
+        <p-inputMask text="text" name="txtCelular" [(ngModel)]="filtro.celular"
+           mask="(99)99999-9999"></p-inputMask>
+      </div>
+
+      <div class="ui-g-12 ui-md-4 ui-lg-4" [style.text-align]="'start'">
+          <label class="label-button">&#160;</label>
+        <button pButton (click)="consultar()" label="Buscar" class="ui-button-secondary" icon="pi pi-search">
+        </button>
+        <button pButton label="Inserir" [disabled]="!auth.temPermissao('ROLE_INSERIR_CLIENTE')"
+          icon="pi pi-file" routerLink="/clientes/novo">
+        </button>
+
+        </div>
+    </div>
+
+    <div class="ui-g">
+      <div class="ui-g-12">
+        <p-table [value]="clientes" [rows]="filtro.itensPorPagina" [paginator]="true" #grid [responsive]="true"
+          [lazy]="true" [totalRecords]="totalRegistros" (onLazyLoad)="aoMudarPagina($event)">
+
+          <ng-template pTemplate="header">
+            <tr>
+              <th class="col-id font-grid">Id</th>
+              <th class="col-left font-grid">Nome</th>
+              <th class="col-left font-grid">Responsavel</th>
+              <th class="col-left font-grid" style="width: 110px">Telefone</th>
+              <th class="col-left font-grid" style="width: 110px">Celular</th>
+              <th class="col-center font-grid ui-p-4" style="width: 100px">Últ. Corte</th>
+              <th class="col-center font-grid" style="width: 100px">Bloqueado</th>
+              <th class="col-acoes1 font-grid" style="text-align: start"></th>
+            </tr>
+          </ng-template>
+
+          <!-- tela desktop -->
+          <ng-template pTemplate="body" let-cliente *ngIf="!telaMobile()">
+            <tr>
+              <td class="col-id font-grid">
+                <span class="ui-column-title">Id:</span>{{cliente.id | zeroEsquerda: '6'}}
+              </td>
+
+              <td class="col-left font-grid">
+                <span class="ui-column-title">Nome:</span>{{cliente.nome}}
+              </td>
+
+              <td class="col-left font-grid">
+                <span class="ui-column-title">Responsável:</span>{{cliente.responsavel}}
+              </td>
+
+              <td class="col-left font-grid" style="width: 100px">
+                <span class="ui-column-title">Telefone:</span>{{cliente.telefone}}
+              </td>
+
+              <td class="col-left font-grid" style="width: 100px">
+                <span class="ui-column-title">Celular:</span>{{cliente.celular}}
+              </td>
+
+              <td class="col-left font-grid ui-p-4" style="width: 100px">
+                <span class="ui-column-title">Últ. Corte:</span>{{cliente.ultimoCorte  | date: 'dd/MM/yyyy'}}
+              </td>
+
+              <td class="col-center font-grid" style="width: 100px">
+                <span class="ui-column-title">Inativo:</span>
+                <span [ngStyle]="buscarCorInativo(cliente.inativo)">{{ cliente.inativo ? 'Sim' : 'Não' }}</span>
+              </td>
+
+              <td class="col-acoes1 font-grid" style="padding: 2px; text-align: start">
+                <p-menu #menu [popup]="true" [model]="acaoItens"
+                  appendTo="body"></p-menu>
+                <button pButton type="button" title="Opções" class="ui-button-primary"
+                  icon="pi pi-cog" (click)="acoesDropDownClick(cliente.id); menu.toggle($event);"
+                  class="botao-pequeno">
+                </button>
+              </td>
+            </tr>
+          </ng-template>
+
+          <!-- smartphone -->
+          <ng-template pTemplate="body" let-cliente *ngIf="telaMobile()">
+            <tr>
+              <td class="col-id font-grid padding-2">
+                <span class="titulo-grid-mobile">Id:</span>{{cliente.id | zeroEsquerda: '6'}}
+                <span class="titulo-grid-mobile">Nome:</span>
+                <span class="conteudo-grid-mobile">{{cliente.nome}}</span>
+              </td>
+
+              <td class="col-left font-grid padding-2" style="width: 100px">
+                <span class="titulo-grid-mobile">Celular:</span>
+                <span class="conteudo-grid-mobile">{{cliente.celular}}</span>
+              </td>
+
+              <td class="col-acoes1 font-grid" style="padding: 2px; text-align: start">
+                <p-menu #menu [popup]="true" [model]="acaoItens"
+                  appendTo="body"></p-menu>
+                <button pButton type="button" title="Opções" class="ui-button-primary"
+                  icon="pi pi-cog" (click)="acoesDropDownClick(cliente.id); menu.toggle($event);"
+                  class="botao-pequeno">
+                </button>
+              </td>
+            </tr>
+          </ng-template>
+        </p-table>
+      </div>
+    </div>
+  </form>
+</div>

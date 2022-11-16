@@ -1,0 +1,31 @@
+<div class="container" style="max-width: 400px; margin: auto; padding-top: 2em">
+  <form autocomplete="off" #f="ngForm">
+    <div class="ui-g ui-fluid">
+
+      <div class="ui-g-12">
+        <h1 style="text-align: center">Alteração de Senha</h1>
+      </div>
+
+      <div class="ui-g-12">
+        <input pInputText type="password" name="senhaAtual" placeholder="Senha Atual"
+          ngModel required #senhaAtual>
+      </div>
+
+      <div class="ui-g-12">
+        <input pInputText type="password" name="novaSenha" placeholder="Nova Senha"
+          ngModel required #novaSenha>
+      </div>
+
+      <div class="ui-g-12">
+        <input pInputText type="password" name="confirmacaoSenha" placeholder="Confirmação"
+          ngModel required #confirmacaoSenha>
+      </div>
+
+      <div class="ui-g-12">
+        <button pButton type="submit" label="Alterar" [disabled]="!f.valid" class="ui-button-success"
+          (click)="alterarSenha(senhaAtual.value, novaSenha.value, confirmacaoSenha.value);">
+        </button>
+      </div>
+    </div>
+  </form>
+</div>

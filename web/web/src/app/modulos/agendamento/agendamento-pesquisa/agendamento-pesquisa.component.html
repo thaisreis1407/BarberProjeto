@@ -1,0 +1,134 @@
+<div class="container">
+  <form autocomplete="off">
+    <div class="ui-g" style="margin-top: -15px;">
+      <div id="titulo" class="ui-g-12" style="margin-bottom: -20px; margin-top: -20">
+        <h2>Agendamentos</h2>
+      </div>
+
+      <div class="ui-g-2 ui-md-3 ui-lg-2 ui-fluid">
+        <label>Status</label>
+        <p-dropdown emptyFilterMessage="Todos"
+         [options]="[ {label:'Agendado', value: 'A'}, {label:'Em Atendimento', value: 'E'}, {label:'Concluído', value: 'C'} ]"
+          name="cmbStatus"
+          [(ngModel)]="filtro.status"
+        [showClear]="true"
+          placeholder="Todos">
+        </p-dropdown>
+      </div>
+
+      <div class="ui-g-4 ui-md-3 ui-lg-2 ui-fluid">
+        <label>Atendente</label>
+        <p-dropdown emptyFilterMessage="" [options]="listaAtendentes"
+          name="cmbAtendente"
+          [(ngModel)]="filtro.idAtendente"
+          [filter]="true"
+          placeholder="Todos">
+        </p-dropdown>
+      </div>
+
+      <div class="ui-g-6 ui-md-3 ui-lg-4 ui-fluid">
+        <label>Cliente</label>
+        <p-dropdown emptyFilterMessage="" [options]="listaClientes"
+          name="cmbCliente"
+          [(ngModel)]="filtro.idCliente"
+          [filter]="true"
+          placeholder="Todos">
+        </p-dropdown>
+      </div>
+
+      <div class="ui-g-6 ui-md-3 ui-lg-2 ui-fluid">
+        <label>Data Início</label>
+        <p-calendar dateFormat="dd/mm/yy" [inline]="false" ngModel
+          name="txtDataInicio"
+          [readonlyInput]="true" appendTo="body" [showButtonBar]="true"
+          [monthNavigator]="true" [yearNavigator]="true"
+          yearRange="1930:2030" [locale]="cfgPtBr"
+          [(ngModel)]="filtro.dataInicio">
+        </p-calendar>
+      </div>
+
+      <div class="ui-g-6 ui-md-3 ui-lg-2 ui-fluid">
+        <label>Data Final</label>
+        <p-calendar dateFormat="dd/mm/yy" [inline]="false" ngModel
+          name="txtDataFim" [locale]="cfgPtBr"
+          [readonlyInput]="true" appendTo="body" [showButtonBar]="true"
+          [monthNavigator]="true" [yearNavigator]="true"
+          yearRange="1930:2030"
+          [(ngModel)]="filtro.dataFim">
+        </p-calendar>
+      </div>
+
+      <div class="ui-g-12 ui-md-4 ui-lg-4" [style.text-align]="'start'">
+          <label class="label-button">&#160;</label>
+        <button pButton (click)="consultar()" label="Buscar" class="ui-button-secondary" icon="pi pi-search">
+        </button>
+        <button pButton label="Inserir" [disabled]="!auth.temPermissao('ROLE_INSERIR_AGENDAMENTO')"
+          icon="pi pi-file" routerLink="/agendamentos/novo">
+        </button>
+
+        </div>
+    </div>
+
+    <div class="ui-g">
+      <div class="ui-g-12">
+        <p-table [value]="agendamentos" [rows]="filtro.itensPorPagina" [paginator]="true" #grid [responsive]="true"
+          [lazy]="true" [totalRecords]="totalRegistros" (onLazyLoad)="aoMudarPagina($event)">
+
+          <ng-template pTemplate="header">
+            <tr>
+              <th class="col-id font-grid">Id</th>
+              <th class="col-data font-grid">Data</th>
+              <th class="col-hora font-grid">Hora</th>
+              <th class="col-left font-grid" style="width: 180px;">Atendente</th>
+              <th class="col-left font-grid">Cliente</th>
+              <th class="col-left font-grid"  style="width: 150px">Status</th>
+              <th class="col-left font-grid ui-p-4">Observação</th>
+              <th class="col-acoes1 font-grid" style="text-align: start"></th>
+            </tr>
+          </ng-template>
+
+          <ng-template pTemplate="body" let-agendamento>
+            <tr>
+              <td class="col-id font-grid">
+                <span class="ui-column-title">Id:</span>{{agendamento.id | zeroEsquerda: '6'}}
+              </td>
+
+              <td class="col-data font-grid">
+                <span class="ui-column-title">Data:</span>{{agendamento.data | date: 'dd/MM/yyyy'}}
+              </td>
+
+              <td class="col-data font-grid">
+                <span class="ui-column-title">Hora:</span>{{agendamento.hora | horaBr}}
+              </td>
+
+              <td class="col-left font-grid">
+                <span class="ui-column-title">Atendente:</span>{{agendamento.nomeAtendente}}
+              </td>
+
+              <td class="col-left font-grid">
+                <span class="ui-column-title">Cliente:</span>{{agendamento.nomeCliente}}
+              </td>
+
+              <td class="col-left font-grid" style="width: 150px">
+                <span class="ui-column-title">status:</span>{{buscaNomeStatus(agendamento.status)}}
+              </td>
+
+              <td class="col-left font-grid ui-p-4">
+                <span class="ui-column-title">Observação:</span>{{agendamento.observacao}}
+              </td>
+
+              <td class="col-acoes1 font-grid" style="padding: 2px; text-align: start">
+                <p-menu #menu [popup]="true" [model]="acaoItens" [style]="{'white-space':'nowrap', 'width': 'auto'}"
+                  appendTo="body"></p-menu>
+                <button pButton type="button" title="Opções" class="ui-button-primary"
+                  icon="pi pi-cog" (click)="acoesDropDownClick(agendamento.id, agendamento.status); menu.toggle($event);"
+                  class="botao-pequeno">
+                </button>
+              </td>
+            </tr>
+          </ng-template>
+        </p-table>
+      </div>
+    </div>
+  </form>
+</div>

@@ -1,0 +1,43 @@
+a {
+  text-decoration: none;
+}
+#div-footer {
+  background-color: #4B4B4D;
+  height: 100%;
+
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr;
+  grid-template-areas: "sua empresa";
+
+  color: white;
+  line-height: 30px;
+
+}
+
+#div-empresa {
+
+  font-size: 12px;
+  margin-left: 5px;
+  margin-right: 5px;
+  grid-area: empresa;
+}
+
+#div-devenvolvido {
+
+  font-size: 12px;
+  margin-left: 5px;
+  margin-right: 5px;
+  grid-area: devenvolvido;
+  text-align: center;
+}
+
+#div-licenca {
+
+  font-size: 12px;
+  margin-left: 5px;
+  margin-right: 5px;
+  grid-area: licenca;
+  text-align: end;
+}
+

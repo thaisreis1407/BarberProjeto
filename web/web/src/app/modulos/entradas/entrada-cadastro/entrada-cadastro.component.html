@@ -1,0 +1,81 @@
+<div class="container" style="height: 100%">
+    <form autocomplete="false" #frmEntrada="ngForm" name="frmEntrada"
+      (ngSubmit)="confirmarDados(frmEntrada)" >
+      <div class="ui-g" style="margin-top: -15px;">
+        <div id="titulo" class="ui-g-12" style="margin-bottom: -15px; margin-top: -20">
+          <h2>{{ editando ? ( modoConsulta ? 'Consultando' : 'Alterando ') : 'Inserindo' }} Entrada de Produtos</h2>
+        </div>
+      </div>
+
+      <div class="ui-g" style="margin-top: -5px;">
+
+        <div class="ui-g-3 ui-md-2 ui-lg-2 ui-fluid">
+          <label>Data*</label>
+          <p-calendar dateFormat="dd/mm/yy" [inline]="false" ngModel
+            name="txtDataEntrada" [locale]="cfgPtBr"
+            [required]="true"
+            [readonlyInput]="true" appendTo="body" [showButtonBar]="true"
+            [disabled]="modoConsulta" [monthNavigator]="true" [yearNavigator]="true"
+            yearRange="1930:2030"
+            [(ngModel)]="entrada.dataEntrada">
+          </p-calendar>
+        </div>
+
+        <div class="ui-g-6 ui-md-4 ui-lg-4 ui-fluid">
+          <label>Produto*</label>
+          <p-dropdown emptyFilterMessage="" [options]="listaProdutos" [disabled]="modoConsulta"
+            name="cmbPerfil" [required]="true"
+            [(ngModel)]="entrada.produtoServico"
+            [filter]="true"
+            placeholder="Selecione">
+          </p-dropdown>
+        </div>
+
+        <div class="ui-g-6 ui-md-2 ui-lg-2 ui-fluid">
+          <label>Valor Unit*</label>
+          <input pInputText text="text" name="txtValorUnitario" [(ngModel)]="entrada.valorUnitario"
+            [disabled]="modoConsulta" maxlength=40
+            (blur)="calculaTotal()"
+            currencyMask [options]="{ prefix: '', precision :2, thousands: '.', decimal: ',', allowNegative: false }">
+        </div>
+
+        <div class="ui-g-6 ui-md-2 ui-lg-2 ui-fluid">
+          <label>Quantidade*</label>
+          <input pInputText text="text" name="txtQuantidade" [(ngModel)]="entrada.quantidade"
+            [disabled]="modoConsulta" maxlength=40
+
+            (blur)="calculaTotal()"
+            currencyMask [options]="{ prefix: '', precision :0, thousands: '.', decimal: ',', allowNegative: false }">
+        </div>
+
+        <div class="ui-g-6 ui-md-2 ui-lg-2 ui-fluid">
+          <label>Valor Tot</label>
+          <input pInputText text="text" name="txtValorTotal" [(ngModel)]="entrada.valorTotal"
+            [disabled]="true" maxlength=40
+            currencyMask [options]="{ prefix: '', precision :2, thousands: '.', decimal: ',', allowNegative: false }">
+        </div>
+
+
+
+        <!-- <div class="ui-g-12 ui-md-6 ui-lg-6 ui-fluid">
+          <label style="display: block;">x</label>
+          <p-checkbox [(ngModel)]= "inativo" [binary]="true" name="padrao"
+          label = "Inativo">
+          </p-checkbox>
+        </div> -->
+
+      </div>
+
+      <div class="ui-g-12">
+        <button pButton #btnSalvar type="submit" label="Salvar" class="ui-button-success"
+          icon="pi pi-save"
+          pTooltip="Salvar" [disabled]="frmEntrada.invalid || entrada.valorTotal === 0"
+          *ngIf="!modoConsulta">
+        </button>
+
+        <button pButton type="button" label="Voltar" class="ui-button-secondary"
+          (click)="voltar()" icon="pi pi-chevron-circle-left">
+        </button>
+      </div>
+    </form>
+  </div>

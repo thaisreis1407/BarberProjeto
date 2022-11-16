@@ -1,0 +1,76 @@
+<div class="container" style="height: 100%">
+    <form autocomplete="false" #frmProduto="ngForm" name="frmProduto"
+      (ngSubmit)="confirmarDados(frmProduto)" >
+      <div class="ui-g" style="margin-top: -15px;">
+        <div id="titulo" class="ui-g-12" style="margin-bottom: -15px; margin-top: -20">
+          <h2>{{ editando ? ( modoConsulta ? 'Consultando' : 'Alterando ') : 'Inserindo' }} Produtos</h2>
+        </div>
+      </div>
+
+      <div class="ui-g" style="margin-top: -5px;">
+
+        <div class="ui-g-6 ui-md-2 ui-lg-2 ui-fluid">
+          <label>Tipo</label>
+          <p-dropdown emptyFilterMessage=""
+            [options]="[ {label:'Produto', value: 0}, {label:'Serviço', value: 1} ]"
+            [disabled]="modoConsulta || idProdutoServico > 0"
+            name="cmbTipo" [required]="true"
+            [(ngModel)]="produtoServico.tipo" ngModel
+            placeholder="Selecione">
+          </p-dropdown>
+        </div>
+
+        <div class="ui-g-12 ui-md-6 ui-lg-6 ui-fluid">
+          <label>Descrição*</label>
+          <input pInputText text="text" name="txtDescricao" [(ngModel)]="produtoServico.descricao"
+            [disabled]="modoConsulta" maxlength=40 appAutofocus [required]="true">
+        </div>
+
+        <div class="ui-g-12 ui-md-2 ui-lg-2 ui-fluid">
+          <label>Custo</label>
+          <input pInputText text="text" name="txtCusto" [(ngModel)]="produtoServico.custo"
+            [disabled]="modoConsulta" mode="decimal" maxlength=10
+            currencyMask [options]="{ prefix: '', precision :2, thousands: '.', decimal: ',', allowNegative: false }">
+        </div>
+
+        <div class="ui-g-12 ui-md-2 ui-lg-2 ui-fluid">
+          <label>Valor</label>
+          <input pInputText text="text" name="txtValor" [(ngModel)]="produtoServico.valor"
+            [disabled]="modoConsulta" mode="decimal" maxlength=10 [required]="true"
+            currencyMask [options]="{ prefix: '', precision :2, thousands: '.', decimal: ',', allowNegative: false }">
+        </div>
+
+        <div class="ui-g-6 ui-md-2 ui-lg-2 ui-fluid">
+          <label>Bloqueado</label>
+          <p-dropdown emptyFilterMessage=""
+            [options]="[ {label:'Sim', value: true}, {label:'Não', value: false} ]"
+            [disabled]="modoConsulta"
+            name="cmbInativo" [required]="true"
+            [(ngModel)]="produtoServico.bloqueado" ngModel
+            placeholder="Selecione">
+          </p-dropdown>
+        </div>
+
+        <div class="ui-g-12 ui-md-2 ui-lg-2 ui-fluid">
+          <label>Saldo</label>
+          <input pInputText text="text" name="txtSaldo" [(ngModel)]="produtoServico.saldo"
+            mode="decimal" maxlength=10
+            [disabled]="true"
+            currencyMask [options]="{ prefix: '', precision :2, thousands: '.', decimal: ',', allowNegative: false }">
+        </div>
+
+      </div>
+
+      <div class="ui-g-12">
+        <button pButton #btnSalvar type="submit" label="Salvar" class="ui-button-success"
+          icon="pi pi-save"
+          pTooltip="Salvar" [disabled]="frmProduto.invalid"
+          *ngIf="!modoConsulta">
+        </button>
+
+        <button pButton type="button" label="Voltar" class="ui-button-secondary"
+          (click)="voltar()" icon="pi pi-chevron-circle-left">
+        </button>
+      </div>
+    </form>
+  </div>

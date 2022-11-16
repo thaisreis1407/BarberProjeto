@@ -1,0 +1,458 @@
+/* You can add global styles to this file, and also import other style files*/
+
+html, body .container-root {
+  height: 100%;
+  overflow-x: hidden;
+  overflow-y: hidden;
+}
+@media (min-width: 40em) {
+  ::-webkit-scrollbar{
+    width: 13px;
+    padding-top: 10px;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #bbbbbb;
+    background: rgba(0, 0, 0, 0.15);
+
+    height: 50px;
+  }
+}
+.padding-2 {
+  padding: 2px !important;
+}
+.titulo-grid-mobile {
+  font-weight: bold;
+  margin-right: 2px;
+}
+
+.conteudo-grid-mobile {
+  margin-right: 8px;
+}
+/*Configuração do layout*/
+.container {
+  padding-top: 1em;
+  grid-area: m;
+  overflow-x: hidden;
+  overflow-y: auto;
+  /* max-height: 93vh; */
+  height: 100%;
+}
+
+footer {
+  grid-area: f;
+  z-index: 9998;
+}
+
+header {
+  grid-area: h;
+}
+
+.container-root {
+  height: 100%;
+  display: grid;
+  overflow:hidden;
+  grid-template-columns: 1fr;
+  grid-template-rows: 5vh 91vh 4vh;
+  grid-template-areas: "h" "m" "f";
+}
+
+@media (max-height: 30em) {
+  footer {
+    visibility: hidden;
+    height: 0px;
+  }
+}
+
+@media (max-width: 40em) {
+  footer {
+    visibility: hidden;
+    height: 0px;
+  }
+}
+
+/*Fim Configuração do layout*/
+
+div .ui-g-12, .ui-md-12, .ui-lg-12, .ui-g-11, .ui-md-11, .ui-lg-11,
+    .ui-g-10, .ui-md-10, .ui-lg-10, .ui-g-10, .ui-md-10, .ui-lg-10,
+    .ui-g-9, .ui-md-9, .ui-lg-9, .ui-g-9, .ui-md-9, .ui-lg-9,
+    .ui-g-8, .ui-md-8, .ui-lg-8, .ui-g-8, .ui-md-8, .ui-lg-8,
+    .ui-g-7, .ui-md-7, .ui-lg-7, .ui-g-7, .ui-md-7, .ui-lg-7,
+    .ui-g-6, .ui-md-6, .ui-lg-6, .ui-g-6, .ui-md-6, .ui-lg-6,
+    .ui-g-5, .ui-md-5, .ui-lg-5, .ui-g-5, .ui-md-5, .ui-lg-5,
+    .ui-g-4, .ui-md-4, .ui-lg-4, .ui-g-4, .ui-md-4, .ui-lg-4,
+    .ui-g-3, .ui-md-3, .ui-lg-3, .ui-g-3, .ui-md-3, .ui-lg-3,
+    .ui-g-2, .ui-md-2, .ui-lg-2, .ui-g-2, .ui-md-2, .ui-lg-2,
+    .ui-g-1, .ui-md-1, .ui-lg-1, .ui-g-1, .ui-md-1, .ui-lg-1 {
+  padding: 4px;
+}
+
+/* dropdown não ficava 100% quando usado classe ui-inputgroup*/
+.ui-fluid p-dropdown {
+  width: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  color: #404c51;
+}
+
+label {
+  font-weight: bold;
+}
+
+a {
+  text-decoration: none;
+  margin: 1px;
+}
+
+.label-button {
+  display: block;
+}
+
+/* Show priority 3 at 640px (40em x 16px) */
+@media (max-width: 40em) {
+  .label-button {
+    visibility: hidden;
+    height: 0px;
+  }
+}
+
+a, button {
+  margin-right: .25em;
+}
+
+.p0 {
+  padding: 3px
+}
+a:hover, a:focus {
+  text-decoration: underline;
+}
+/*Alterações de ajuste no layout e thema do prime ng*/
+/*###################################################*/
+.ui-button {
+  margin-right: 2px !important;
+}
+
+/*dropdown*/
+body .ui-dropdown:not(.ui-state-disabled):hover .ui-dropdown-label {
+  border-color: #131212 !important;
+  background: #ececec !important;
+}
+body .ui-dropdown:not(.ui-state-disabled).ui-state-focus .ui-dropdown-label {
+  border-color: #131212 !important;
+  background: #e2ecec !important;
+}
+
+/*inputtext*/
+body .ui-inputtext:enabled:hover {
+  border-color: #131212 !important;
+  background: #e2ecec !important;
+}
+body .ui-inputtext.ng-dirty.ng-invalid:enabled:hover {
+  border-color: #ff0000 !important;
+  background: #ececec !important;
+}
+body .ui-inputtext:enabled:focus {
+  border-color: #131212 !important;
+  background: #e2ecec !important;
+}
+body .ui-inputtext.ui-inputtext.ng-dirty.ng-invalid:enabled:focus {
+  border-color: #ff0000 !important;
+  background: #e2ecec !important;
+}
+
+body .ui-inputtext.ng-dirty.ng-invalid,
+body p-dropdown.ng-dirty.ng-invalid > .ui-dropdown,
+body p-autocomplete.ng-dirty.ng-invalid > .ui-autocomplete > .ui-inputtext,
+body p-calendar.ng-dirty.ng-invalid > .ui-calendar > .ui-inputtext,
+body p-chips.ng-dirty.ng-invalid > .ui-inputtext,
+body p-inputmask.ng-dirty.ng-invalid > .ui-inputtext,
+body p-checkbox.ng-dirty.ng-invalid .ui-chkbox-box,
+body p-radiobutton.ng-dirty.ng-invalid .ui-radiobutton-box,
+body p-inputswitch.ng-dirty.ng-invalid .ui-inputswitch,
+body p-listbox.ng-dirty.ng-invalid .ui-inputtext,
+body p-multiselect.ng-dirty.ng-invalid > .ui-multiselect,
+body p-spinner.ng-dirty.ng-invalid > .ui-inputtext,
+body p-selectbutton.ng-dirty.ng-invalid .ui-button,
+body p-togglebutton.ng-dirty.ng-invalid .ui-button {
+  border: 1px solid #ff0000;
+}
+
+body .ui-button.ui-state-default.ui-button-secondary, body .ui-buttonset.ui-button-secondary > .ui-button.ui-state-default {
+  color: #ffffff;
+  background-color: #686868;
+  border: 1px solid #686868; }
+  body .ui-button.ui-state-default.ui-button-secondary:enabled:hover, body .ui-buttonset.ui-button-secondary > .ui-button.ui-state-default:enabled:hover {
+    background-color: #5c5c5c;
+    color: #ffffff;
+    border-color: #5c5c5c; }
+  body .ui-button.ui-state-default.ui-button-secondary:enabled:focus, body .ui-buttonset.ui-button-secondary > .ui-button.ui-state-default:enabled:focus {
+    background-color: #5c5c5c; }
+  body .ui-button.ui-state-default.ui-button-secondary:enabled:active, body .ui-buttonset.ui-button-secondary > .ui-button.ui-state-default:enabled:active {
+    background-color: #686868;
+    color: #ffffff;
+    border-color: #686868; }
+
+    body .ui-button.ui-state-default.ui-button-success, body .ui-buttonset.ui-button-success > .ui-button.ui-state-default {
+      color: #ffffff;
+      background-color: #28a745;
+      border: 1px solid #28a745; }
+      body .ui-button.ui-state-default.ui-button-success:enabled:hover, body .ui-buttonset.ui-button-success > .ui-button.ui-state-default:enabled:hover {
+        background-color: #218838;
+        color: #ffffff;
+        border-color: #218838; }
+      body .ui-button.ui-state-default.ui-button-success:enabled:focus, body .ui-buttonset.ui-button-success > .ui-button.ui-state-default:enabled:focus {
+        background-color: #218838; }
+      body .ui-button.ui-state-default.ui-button-success:enabled:active, body .ui-buttonset.ui-button-success > .ui-button.ui-state-default:enabled:active {
+        background-color: #218838;
+        color: #ffffff;
+        border-color: #28a745; }
+
+body .ui-button.ui-state-default.ui-button-danger, body .ui-buttonset.ui-button-danger > .ui-button.ui-state-default {
+  color: #ffffff;
+  background-color: #db2b3c;
+  border: 1px solid #db2b3c; }
+  body .ui-button.ui-state-default.ui-button-danger:enabled:hover, body .ui-buttonset.ui-button-danger > .ui-button.ui-state-default:enabled:hover {
+    background-color: #b31f2e;
+    color: #ffffff;
+    border-color: #b31f2e; }
+  body .ui-button.ui-state-default.ui-button-danger:enabled:focus, body .ui-buttonset.ui-button-danger > .ui-button.ui-state-default:enabled:focus {
+    background-color: #b31f2e; }
+  body .ui-button.ui-state-default.ui-button-danger:enabled:active, body .ui-buttonset.ui-button-danger > .ui-button.ui-state-default:enabled:active {
+    background-color: #db2b3c;
+    color: #ffffff;
+    border-color: #db2b3c; }
+
+  .ui-card {
+    border: 1px solid #b9b7b7;
+  }
+
+  .ui-card-title {
+    font-size: 12px;
+  }
+
+  body .ui-listbox .ui-listbox-list .ui-listbox-item.ui-state-highlight {
+    color: #333333;
+    background-color: #c5d7e6;
+  }
+
+  body .ui-multiselect-panel .ui-multiselect-items .ui-multiselect-item.ui-state-highlight {
+    color: #333333;
+    background-color: #c5d7e6;
+  }
+
+/*Disabled color*/
+.ui-state-disabled, .ui-widget-content .ui-state-disabled, .ui-widget-header .ui-state-disabled {
+  opacity: .95 !important;
+  filter: Alpha(Opacity = .95) !important;
+  background-image: none;
+  background: #fafaf6;
+}
+.ui-menuitem-link.ui-state-disabled { /*Configura o item do menu para ficar da forma q era*/
+  opacity: .50 !important;
+  filter: Alpha(Opacity = .50) !important;
+  background-image: none;
+  background: #fafaf6;
+}
+body .ui-inputtext:disabled {
+  opacity: .95 !important;
+  filter: Alpha(Opacity = .95) !important;
+  background-image: none;
+  background: #fafaf6;
+}
+body .ui-inputtext.ng-dirty.ng-invalid:disabled {
+  opacity: .95 !important;
+  filter: Alpha(Opacity = .95) !important;
+  background-image: none;
+  background: #fafaf6;
+}
+body .ui-inputtext:enabled:focus {
+  opacity: .95 !important;
+  filter: Alpha(Opacity = .95) !important;
+  background-image: none;
+  background: #fafaf6;
+}
+
+/*dropdown*/
+body .ui-dropdown.ui-state-disabled .ui-dropdown-label {
+  opacity: .95 !important;
+  filter: Alpha(Opacity = .95) !important;
+  background-image: none;
+  background: #fafaf6;
+}
+
+/*Fim Disabled color*/
+/*###################################################*/
+
+
+#titulo {
+  padding-top: 0px;
+  padding-bottom: 0px;
+}
+
+
+@media(min-width: 1024px){
+  .container {
+    margin: 0 auto;
+    padding-left: .25em;
+    padding-right: .25em;
+  }
+}
+
+@media(min-width: 1024px){
+  .container-nav {
+   margin: 0 auto;
+   padding-left: .25em;
+   padding-right: .25em;
+ }
+}
+
+.font-grid {
+  font-size: 13px;
+}
+
+.col-valor {
+  width: 110px;
+  text-align: right;
+}
+
+.col-valor-m {
+  width: 80px;
+  text-align: right;
+}
+
+.col-valor-p {
+  width: 70px;
+  text-align: right;
+}
+
+.ui-blockui {
+  background-color: transparent;
+  background-image: none;
+  opacity: 0.1;
+}
+.col-qtd {
+  width: 60px;
+  text-align: right;
+}
+
+.col-data {
+  width: 90px;
+  text-align: left;
+}
+
+.col-data-center {
+  width: 90px;
+  text-align: center;
+}
+
+.col-hora {
+  width: 45px;
+  text-align: left;
+}
+
+.col-id {
+  width: 55px;
+  text-align: left;
+}
+
+.col-status {
+  width: 30px;
+  text-align: center;
+}
+
+.col-acoes-3 {
+  width: 100px;
+  text-align: center;
+}
+
+.col-acoes-2-5 {
+  width: 85px;
+  text-align: center;
+}
+
+.col-acoes-dropdown {
+  width: 75px;
+  text-align: left;
+}
+
+.col-acoes-4 {
+  width: 140px;
+  text-align: center;
+}
+
+.col-acoes-2 {
+  width: 70px;
+  text-align: center;
+}
+
+.col-acoes {
+  width: 75px;
+  text-align: left;
+}
+
+.col-acoes1 {
+  width: 35px;
+  text-align: left;
+}
+
+.botao-pequeno {
+  width: 26px !important;
+  height: 26px !important;
+}
+
+.botao-pequeno-largo {
+  width: 40px !important;
+  height: 26px !important;
+}
+
+.col-left {
+  text-align: left;
+}
+
+.col-right {
+  text-align: right;
+}
+
+.col-center {
+  text-align: center;
+}
+
+th {
+  padding-left: 4px !important;
+  padding-right: 4px !important;
+}
+
+td {
+  padding-left: 4px !important;
+  padding-right: 4px !important;
+}
+
+.font-p {
+  font-family: Arial, Helvetica, sans-serif !important;
+  font-size: 12px !important;
+}
+
+.font-g {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 18px;
+}
+
+
+body .ui-datepicker {
+  padding: 0px;
+}
+
+body .ui-datepicker table td a {
+  padding: 0px;
+  margin: -2px;
+}
+
+.alinha-direita {
+  text-align: end;
+}
+
+.alinha-esquerda {
+  text-align: start;
+}

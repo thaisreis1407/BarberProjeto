@@ -1,0 +1,37 @@
+<head>
+  <meta http-equiv="Cache-Control" content="no-cache">
+</head>
+
+<div class="container" id="div-principal"style="max-width: 350px; margin: auto">
+  <form autocomplete="off" #f="ngForm">
+    <div class="ui-g ui-fluid">
+
+      <div class="ui-g-12" style="text-align: center;">
+        <h1>Login</h1>
+      </div>
+
+      <div class="ui-g-12">
+        <div class="ui-inputgroup">
+          <input pInputText type="text" autofocus name="usuario" placeholder="Usuário"
+            ngModel required #usuario>
+          <span class="ui-inputgroup-addon"><i class="pi pi-user"></i></span>
+        </div>
+      </div>
+
+      <div class="ui-g-12">
+        <div class="ui-inputgroup">
+          <input pInputText type="password" name="senha" placeholder="Senha"
+            ngModel required #senha>
+            <span class="ui-inputgroup-addon"><i class="pi pi-lock"></i></span>
+        </div>
+      </div>
+
+      <div class="ui-g-12">
+        <button pButton type="submit" label="Entrar" [disabled]="!f.valid" class="ui-button-success"
+          (click)="login(usuario.value, senha.value); senha.value=''"></button>
+      </div>
+
+    </div>
+  </form>
+
+</div>

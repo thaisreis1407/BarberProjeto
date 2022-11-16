@@ -1,0 +1,92 @@
+.navbar {
+  /*padding: 0px 0;*/
+  background-color: #4B4B4D;
+  overflow: hidden;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 9998;
+}
+
+.navbar-toggle {
+  color:#fff;
+}
+
+.navebar-titulo {
+  color:#fff;
+  text-align: center;
+  float: center;
+  height: 35x;
+  line-height: 30px;
+  margin-right: 0px;
+  font-style: bold;
+  font-size: 25px;
+}
+
+.navebar-botao {
+  float: left;
+  margin-right: 5px;
+  margin-top: 8px
+}
+
+.navebar-botao-right {
+  float: right;
+  margin-right: 5px;
+  margin-top: 8px
+}
+
+.navbar-menu {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  margin: 0;
+  z-index: 9999;
+  padding: 0;
+  background-color: #4B4B4D;
+  list-style: none;
+  width: 18em;
+}
+
+.navbar-menu-mobile {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  margin: 0;
+  z-index: 9999;
+  padding: 0;
+  /*background-color: #3a3633;*/
+  list-style: none;
+  width: 18em;
+}
+
+.navbar-usuario {
+  /*border-bottom: 1px solid #525151;*/
+  padding: 15px;
+  /*margin-bottom: 15px;*/
+  font-weight: bold;
+  text-transform: uppercase;
+  text-align: center;
+  background-color: #4B4B4D;
+  color: #fff;
+  cursor:Pointer;
+}
+
+.navbar-menuitem {
+  padding: 15px;
+}
+
+.navbar-menuitem a {
+  color: #ffffff;
+  text-decoration: none;
+  cursor:Pointer;
+}
+
+.navbar-menuitem a:hover {
+  color: #fff;
+}
+
+.navbar-menuitem.ativo {
+  background-color: #494541
+}

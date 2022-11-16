@@ -1,0 +1,115 @@
+<div class="container">
+  <form autocomplete="off">
+    <div class="ui-g" style="margin-top: -15px;">
+      <div id="titulo" class="ui-g-12" style="margin-bottom: -20px; margin-top: -20">
+        <h2>Agendamento</h2>
+      </div>
+
+
+      <div class="ui-g-12 ui-md-4 ui-lg-4 ui-fluid">
+        <div class="ui-g-12 ui-fluid">
+        <label>Calendário</label>
+        <p-calendar dateFormat="dd/mm/yy" [inline]="true"
+          [readonlyInput]="true" ngModel #txtDataAgenda
+          (onSelect)="consultar()" [showOtherMonths]="false"
+          [showIcon]="false" [locale]="cfgPtBr" name="txtDataAgenda"
+          (onMonthChange)="onMonthChange($event)"
+          [(ngModel)]="dataSelecionada">
+
+          <ng-template pTemplate="date" let-date>
+            <div
+              [ngStyle]="buscaCorDia(date.day)">{{date.day}}
+            </div>
+          </ng-template>
+        </p-calendar>
+        </div>
+
+         <!-- tela desktop -->
+        <div class="ui-g-12" style="text-align: center; margin-top: 10px;" *ngIf="!telaMobile()">
+          <div id="imagem">
+            <img [src]="imagemFundoPath" width="270px" >
+          </div>
+        </div>
+
+         <!-- tela smatphone -->
+        <div class="ui-g-12" style="text-align: center; margin-top: 10px;" *ngIf="telaMobile()">
+          <div id="imagem">
+            <img [src]="imagemFundoPath" width="120px" >
+          </div>
+        </div>
+      </div>
+
+
+      <div class="ui-g-12 ui-md-4 ui-lg-4" *ngFor="let item of agendamentos" style="padding:0">
+        <div style="border-style: solid; border-width: 1px; padding: 4px;
+         margin:3px; border-radius: 3px; border-color: #A6A6A6;">
+          <label>{{item.nomeAgenda}}</label>
+          <p-table [value]="item.agendaDiaDetalhe" #grid
+            [scrollable]="true" scrollHeight="470px"
+            [responsive]="true">
+            <ng-template pTemplate="header">
+              <tr>
+                <th class="col-hora font-grid">Hora</th>
+                <th class="col-left font-grid">Cliente</th>
+                <th class="col-left font-grid" style="width: 120px;">Celular</th>
+                <th class="col-acoes1 font-grid" style="text-align: start"></th>
+              </tr>
+            </ng-template>
+
+            <!-- tela desktop -->
+            <ng-template pTemplate="body" let-agendaDia *ngIf="!telaMobile()" >
+              <tr>
+                <td class="col-hora font-grid">
+                  <span class="ui-column-title">Hora:</span>{{agendaDia.hora | horaBr}}
+                </td>
+
+                <td class="col-left font-grid">
+                  <span class="ui-column-title">Cliente:</span>{{agendaDia.agendamento?.nomeCliente}}
+                </td>
+
+                <td class="col-left font-grid" style="width: 120px;">
+                  <span class="ui-column-title">Celular:</span>{{agendaDia.agendamento?.celular}}
+                </td>
+
+                <td class="col-acoes1 font-grid" style="padding: 2px; text-align: start">
+                  <p-menu #menu [popup]="true" [model]="acaoItens"
+                    appendTo="body"></p-menu>
+                  <button pButton type="button" title="Opções" class="ui-button-primary"
+                    icon="pi pi-cog" (click)="acoesDropDownClick(agendaDia.agendamento?.id, item.idAgenda, item.idAtendente, agendaDia.hora); menu.toggle($event);"
+
+                    class="botao-pequeno">
+                  </button>
+                </td>
+              </tr>
+            </ng-template>
+
+             <!-- smartphone -->
+            <ng-template pTemplate="body" let-agendaDia  *ngIf="telaMobile()" >
+              <tr>
+                <td class="col-id font-grid padding-2">
+                  <span class="titulo-grid-mobile">Hora:</span>{{agendaDia.hora | horaBr}}
+                  <span class="titulo-grid-mobile">Celular:</span>
+                  <span class="conteudo-grid-mobile">{{agendaDia.agendamento?.celular}}</span>
+                </td>
+
+                <td class="col-id font-grid padding-2">
+                  <span class="titulo-grid-mobile">Cliente:</span>{{agendaDia.agendamento?.nomeCliente}}
+                </td>
+                <td class="col-acoes1 font-grid" style="padding: 2px; text-align: start">
+                  <p-menu #menu [popup]="true" [model]="acaoItens"
+                    appendTo="body"></p-menu>
+                  <button pButton type="button" title="Opções" class="ui-button-primary"
+                    icon="pi pi-cog" (click)="acoesDropDownClick(agendaDia.agendamento?.id, item.idAgenda, item.idAtendente, agendaDia.hora); menu.toggle($event);"
+
+                    class="botao-pequeno">
+                  </button>
+                </td>
+              </tr>
+            </ng-template>
+
+          </p-table>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

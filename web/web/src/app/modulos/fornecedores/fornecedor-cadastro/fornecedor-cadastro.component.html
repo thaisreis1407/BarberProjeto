@@ -1,0 +1,59 @@
+<div class="container" style="height: 100%">
+    <form autocomplete="false" #frmFornecedor="ngForm" name="frmFornecedor"
+      (ngSubmit)="confirmarDados(frmFornecedor)" >
+      <div class="ui-g" style="margin-top: -15px;">
+        <div id="titulo" class="ui-g-12" style="margin-bottom: -15px; margin-top: -20">
+          <h2>{{ editando ? ( modoConsulta ? 'Consultando' : 'Alterando ') : 'Inserindo' }} Fornecedor</h2>
+        </div>
+      </div>
+
+      <div class="ui-g" style="margin-top: -5px;">
+
+        <div class="ui-g-12 ui-md-6 ui-lg-6 ui-fluid">
+          <label>Nome*</label>
+          <input pInputText text="text" name="txtNome" [(ngModel)]="fornecedor.nome"
+            [disabled]="modoConsulta" maxlength=40 appAutofocus [required]="true">
+        </div>
+
+        <div class="ui-g-6 ui-md-2 ui-lg-2 ui-fluid">
+          <label>Inativo</label>
+          <p-dropdown emptyFilterMessage=""
+            [options]="[ {label:'Sim', value: true}, {label:'Não', value: false} ]"
+            [disabled]="modoConsulta"
+            name="cmbInativo" [required]="true"
+            [(ngModel)]="fornecedor.inativo" ngModel
+            placeholder="Selecione">
+          </p-dropdown>
+        </div>
+
+        <div class="ui-g-6 ui-md-4 ui-lg-2 ui-fluid">
+          <label>Dia Vencimento</label>
+          <p-dropdown emptyFilterMessage=""
+            [options]="listaDias"
+            [disabled]="modoConsulta"
+            name="cmbDiaVencimento" [required]="true"
+            [(ngModel)]="fornecedor.diaVencimento" ngModel
+            placeholder="Selecione">
+          </p-dropdown>
+        </div>
+
+        <div class="ui-g-4 ui-md-4 ui-lg-2 ui-fluid">
+          <label>Telefone</label>
+          <p-inputMask  name="txtTelefone" [(ngModel)]="fornecedor.telefone"
+            [disabled]="modoConsulta"  mask="(99)9999-9999"></p-inputMask>
+        </div>
+      </div>
+
+      <div class="ui-g-12">
+        <button pButton #btnSalvar type="submit" label="Salvar" class="ui-button-success"
+          icon="pi pi-save"
+          pTooltip="Salvar" [disabled]="frmFornecedor.invalid"
+          *ngIf="!modoConsulta">
+        </button>
+
+        <button pButton type="button" label="Voltar" class="ui-button-secondary"
+          (click)="voltar()" icon="pi pi-chevron-circle-left">
+        </button>
+      </div>
+    </form>
+  </div>

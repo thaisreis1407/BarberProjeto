@@ -1,0 +1,42 @@
+{
+	"folders": [
+		{
+			"path": "api"
+		},
+		{
+			"path": "web"
+		}
+	],
+	"settings": {
+		"git.ignoreMissingGitWarning": true,
+		"workbench.iconTheme": "material-icon-theme",
+		"window.zoomLevel": 0,
+		"files.trimTrailingWhitespace": true,
+		"terminal.integrated.rendererType": "dom",
+		"html.format.wrapLineLength": 110,
+		"editor.wrappingIndent": "indent",
+		"typescript.updateImportsOnFileMove.enabled": "never",
+
+		"editor.rulers": [95, 110],
+		"editor.tabSize": 2,
+
+		"editor.renderLineHighlight": "gutter",
+		"emmet.syntaxProfiles": {
+		  "javascript": "jsx"
+		},
+
+		"javascript.updateImportsOnFileMove.enabled": "never",
+		"breadcrumbs.enabled": false,
+		"editor.parameterHints.enabled": false, // tira os hints de ajuda
+		"workbench.colorTheme": "Dracula",
+
+		"[typescript]": {
+			"editor.defaultFormatter": "vscode.typescript-language-features"
+		},
+		"editor.codeActionsOnSave": {
+			"source.fixAll.eslint": true
+		},
+		"prettier.singleQuote": true,
+		"prettier.endOfLine": "crlf"
+	}
+}

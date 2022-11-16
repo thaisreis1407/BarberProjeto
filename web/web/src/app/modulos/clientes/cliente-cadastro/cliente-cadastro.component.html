@@ -1,0 +1,71 @@
+<div class="container" style="height: 100%">
+    <form autocomplete="false" #frmCliente="ngForm" name="frmCliente"
+      (ngSubmit)="confirmarDados(frmCliente)" >
+      <div class="ui-g" style="margin-top: -15px;">
+        <div id="titulo" class="ui-g-12" style="margin-bottom: -15px; margin-top: -20">
+          <h2>{{ editando ? ( modoConsulta ? 'Consultando' : 'Alterando ') : 'Inserindo' }} Cliente</h2>
+        </div>
+      </div>
+
+      <div class="ui-g" style="margin-top: -5px;">
+
+        <div class="ui-g-12 ui-md-6 ui-lg-6 ui-fluid">
+          <label>Nome*</label>
+          <input pInputText text="text" name="txtNome" [(ngModel)]="cliente.nome"
+            [disabled]="modoConsulta" maxlength=40 appAutofocus [required]="true">
+        </div>
+
+        <div class="ui-g-12 ui-md-4 ui-lg-4 ui-fluid">
+          <label>Responsável</label>
+          <input pInputText text="text" name="txtResponsavel" [(ngModel)]="cliente.responsavel"
+            [disabled]="modoConsulta" maxlength=40>
+        </div>
+
+        <div class="ui-g-6 ui-md-2 ui-lg-2 ui-fluid">
+          <label>Inativo</label>
+          <p-dropdown emptyFilterMessage=""
+            [options]="[ {label:'Sim', value: true}, {label:'Não', value: false} ]"
+            [disabled]="modoConsulta"
+            name="cmbInativo" [required]="true"
+            [(ngModel)]="cliente.inativo" ngModel
+            placeholder="Selecione">
+          </p-dropdown>
+        </div>
+
+        <div class="ui-g-6 ui-md-2 ui-lg-2 ui-fluid">
+          <label>Último Corte</label>
+          <p-calendar dateFormat="dd/mm/yy" [inline]="false" ngModel
+            name="txtUltimoCorte" [locale]="cfgPtBr"
+            [readonlyInput]="true" appendTo="body" [showButtonBar]="true"
+            [disabled]="modoConsulta" [monthNavigator]="true" [yearNavigator]="true"
+            yearRange="1930:2030"
+            [(ngModel)]="cliente.ultimoCorte">
+          </p-calendar>
+        </div>
+
+        <div class="ui-g-6 ui-md-4 ui-lg-4 ui-fluid">
+          <label>Telefone</label>
+          <p-inputMask  name="txtTelefone" [(ngModel)]="cliente.telefone"
+            [disabled]="modoConsulta"  mask="(99)9999-9999"></p-inputMask>
+        </div>
+
+        <div class="ui-g-6 ui-md-4 ui-lg-4 ui-fluid">
+          <label>Celular</label>
+          <p-inputMask  name="txtCelular" [(ngModel)]="cliente.celular"
+            [disabled]="modoConsulta"  mask="(99)99999-9999"></p-inputMask>
+        </div>
+      </div>
+
+      <div class="ui-g-12">
+        <button pButton #btnSalvar type="submit" label="Salvar" class="ui-button-success"
+          icon="pi pi-save"
+          pTooltip="Salvar" [disabled]="frmCliente.invalid"
+          *ngIf="!modoConsulta">
+        </button>
+
+        <button pButton type="button" label="Voltar" class="ui-button-secondary"
+          (click)="voltar()" icon="pi pi-chevron-circle-left">
+        </button>
+      </div>
+    </form>
+  </div>

@@ -1,0 +1,21 @@
+  <header>
+    <app-navbar></app-navbar>
+  </header>
+
+  <p-toast [style]="{marginTop: '80px'}" position="bottom-right"></p-toast>
+
+  <p-confirmDialog header="Confirmação" icon="pi pi-question-circle" #confirmacao>
+    <p-footer>
+      <button type="button" pButton icon="pi pi-check" class="ui-button-success" label="Sim"
+        (click)="confirmacao.accept()"></button>
+      <button type="button" pButton icon="pi pi-times" class="ui-button-danger" label="Não"
+      (click)="confirmacao.reject()"></button>
+    </p-footer>
+  </p-confirmDialog>
+
+  <div class="container-root" id="container-root">
+    <router-outlet></router-outlet>
+    <footer>
+        <app-footer></app-footer>
+    </footer>
+  </div>

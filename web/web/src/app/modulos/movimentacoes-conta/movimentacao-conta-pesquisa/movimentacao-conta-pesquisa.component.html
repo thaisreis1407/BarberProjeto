@@ -1,0 +1,82 @@
+<div class="container">
+  <form autocomplete="off">
+    <div class="ui-g" style="margin-top: -15px;">
+      <div id="titulo" class="ui-g-12" style="margin-bottom: -20px; margin-top: -20">
+        <h2>Movimentações Contas</h2>
+      </div>
+
+      <div class="ui-g-12 ui-md-6 ui-lg-6 ui-fluid">
+        <label>Descrição</label>
+        <input pInputText text="text" name="txtNome" [(ngModel)]="filtro.descricao"
+          appAutofocus maxlength=100>
+      </div>
+
+      <div class="ui-g-12 ui-md-4 ui-lg-4" [style.text-align]="'start'">
+          <label class="label-button">&#160;</label>
+        <button pButton (click)="consultar()" label="Buscar" class="ui-button-secondary" icon="pi pi-search">
+        </button>
+        <button pButton label="Inserir" [disabled]="!auth.temPermissao('ROLE_INSERIR_MOVIMENTACAO_CONTA')"
+          icon="pi pi-file" routerLink="/movimentacoesContas/novo">
+        </button>
+
+        </div>
+    </div>
+
+    <div class="ui-g">
+      <div class="ui-g-12">
+        <p-table [value]="movimentacoesContas" [rows]="filtro.itensPorPagina" [paginator]="true" #grid [responsive]="true"
+          [lazy]="true" [totalRecords]="totalRegistros" (onLazyLoad)="aoMudarPagina($event)">
+
+          <ng-template pTemplate="header">
+            <tr>
+              <th class="col-id font-grid">Id</th>
+              <th class="col-left font-grid">Descrição</th>
+              <th class="col-left font-grid" style="width: 200px">Conta</th>
+              <th class="col-center font-grid ui-p-4" style="width: 120px">Data Mov.</th>
+              <th class="col-valor font-grid ui-p-4" style="width: 120px">Valor</th>
+              <th class="col-center font-grid" style="width: 70px">Tipo</th>
+              <th class="col-acoes1 font-grid" style="text-align: start"></th>
+            </tr>
+          </ng-template>
+
+          <ng-template pTemplate="body" let-movimentacaoConta>
+            <tr>
+              <td class="col-id font-grid">
+                <span class="ui-column-title">Id:</span>{{movimentacaoConta.id | zeroEsquerda: '6'}}
+              </td>
+
+              <td class="col-left font-grid">
+                <span class="ui-column-title">Descrição:</span>{{movimentacaoConta.descricao}}
+              </td>
+
+              <td class="col-left font-grid">
+                <span class="ui-column-title">Conta:</span>{{movimentacaoConta.descricaoConta}}
+              </td>
+
+              <td class="col-left font-grid ui-p-4" style="width: 120px">
+                <span class="ui-column-title">Dia Vencimento:</span>{{movimentacaoConta.dataMovimentacao | date: 'dd/MM/yyyy'}}
+              </td>
+
+              <td class="col-valor font-grid ui-p-4" style="width: 100px">
+                <span class="ui-column-title">Valor:</span>{{movimentacaoConta.valor | number: '1.2-2'}}
+              </td>
+
+              <td class="col-left font-grid" style="width: 100px">
+                <span class="ui-column-title">Tipo:</span>{{movimentacaoConta.tipo=='C' ? 'Crédito' : 'Débito'}}
+              </td>
+
+              <td class="col-acoes1 font-grid" style="padding: 2px; text-align: start">
+                <p-menu #menu [popup]="true" [model]="acaoItens"
+                  appendTo="body"></p-menu>
+                <button pButton type="button" title="Opções" class="ui-button-primary"
+                  icon="pi pi-cog" (click)="acoesDropDownClick(movimentacaoConta.id); menu.toggle($event);"
+                  class="botao-pequeno">
+                </button>
+              </td>
+            </tr>
+          </ng-template>
+        </p-table>
+      </div>
+    </div>
+  </form>
+</div>

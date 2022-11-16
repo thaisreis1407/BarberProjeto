@@ -1,0 +1,78 @@
+<div class="container">
+  <form autocomplete="off">
+    <div class="ui-g" style="margin-top: -15px;">
+      <div id="titulo" class="ui-g-12" style="margin-bottom: -20px; margin-top: -20">
+        <h2>Fornecedores</h2>
+      </div>
+
+      <div class="ui-g-12 ui-md-6 ui-lg-6 ui-fluid">
+        <label>Nome</label>
+        <input pInputText text="text" name="txtNome" [(ngModel)]="filtro.nome"
+          appAutofocus maxlength=100>
+      </div>
+
+      <div class="ui-g-12 ui-md-4 ui-lg-4" [style.text-align]="'start'">
+          <label class="label-button">&#160;</label>
+        <button pButton (click)="consultar()" label="Buscar" class="ui-button-secondary" icon="pi pi-search">
+        </button>
+        <button pButton label="Inserir" [disabled]="!auth.temPermissao('ROLE_INSERIR_CLIENTE')"
+          icon="pi pi-file" routerLink="/fornecedores/novo">
+        </button>
+
+        </div>
+    </div>
+
+    <div class="ui-g">
+      <div class="ui-g-12">
+        <p-table [value]="fornecedores" [rows]="filtro.itensPorPagina" [paginator]="true" #grid [responsive]="true"
+          [lazy]="true" [totalRecords]="totalRegistros" (onLazyLoad)="aoMudarPagina($event)">
+
+          <ng-template pTemplate="header">
+            <tr>
+              <th class="col-id font-grid">Id</th>
+              <th class="col-left font-grid">Nome</th>
+              <th class="col-left font-grid" style="width: 110px">Telefone</th>
+              <th class="col-center font-grid ui-p-4" style="width: 120px">Dia Vencimento</th>
+              <th class="col-center font-grid" style="width: 70px">Inativo</th>
+              <th class="col-acoes1 font-grid" style="text-align: start"></th>
+            </tr>
+          </ng-template>
+
+          <ng-template pTemplate="body" let-fornecedor>
+            <tr>
+              <td class="col-id font-grid">
+                <span class="ui-column-title">Id:</span>{{fornecedor.id | zeroEsquerda: '6'}}
+              </td>
+
+              <td class="col-left font-grid">
+                <span class="ui-column-title">Nome:</span>{{fornecedor.nome}}
+              </td>
+
+              <td class="col-left font-grid" style="width: 100px">
+                <span class="ui-column-title">Telefone:</span>{{fornecedor.telefone}}
+              </td>
+
+              <td class="col-left font-grid ui-p-4" style="width: 120px">
+                <span class="ui-column-title">Dia Vencimento:</span>{{buscaTextoDia(fornecedor.diaVencimento)}}
+              </td>
+
+              <td class="col-center font-grid" style="width: 100px">
+                <span class="ui-column-title">Inativo:</span>
+                <span [ngStyle]="buscarCorInativo(fornecedor.inativo)">{{fornecedor.inativo ? 'Sim' : 'Não' }}</span>
+              </td>
+
+              <td class="col-acoes1 font-grid" style="padding: 2px; text-align: start">
+                <p-menu #menu [popup]="true" [model]="acaoItens"
+                  appendTo="body"></p-menu>
+                <button pButton type="button" title="Opções" class="ui-button-primary"
+                  icon="pi pi-cog" (click)="acoesDropDownClick(fornecedor.id); menu.toggle($event);"
+                  class="botao-pequeno">
+                </button>
+              </td>
+            </tr>
+          </ng-template>
+        </p-table>
+      </div>
+    </div>
+  </form>
+</div>
