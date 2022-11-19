@@ -9,7 +9,8 @@ import routes from './routes';
 import exceptionHandler from './util/excetionHandler';
 
 const corsOptions: cors.CorsOptions = {
-  origin: ['http://localhost:4200', 'http://barber.thsystem.com.br', 'https://barber.thsystem.com.br', 'http://thsystem.com.br', 'https://thsystem.com.br'],
+  origin:  process.env.NODE_ENV === 'development'
+  ? '*' : ['http://localhost:4200', 'http://localhost:3000', 'http://barber.thsystem.com.br', 'https://barber.thsystem.com.br', 'http://thsystem.com.br', 'https://thsystem.com.br'],
   optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
 };
 

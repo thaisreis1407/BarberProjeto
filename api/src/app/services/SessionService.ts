@@ -5,7 +5,7 @@ import jwt from 'jsonwebtoken';
 import authConfig from '../../config/auth';
 import { checkPassword, versionInfo } from '../../util/functions';
 import { getRoles } from '../../util/security';
-import AuthorizedException from '../exceptions/AuthorizedException';
+import AuthenticationException from '../exceptions/AuthenticationException';
 import { UsuarioModel } from '../models/UsuarioModel';
 import BaseService from './BaseService';
 
@@ -77,11 +77,11 @@ class SessionService extends BaseService<UsuarioModel> {
     const usuario = await this.repository.findOne({ login });
 
     if (!usuario) {
-      throw new AuthorizedException('Usuário ou Senha inválida');
+      throw new AuthenticationException('Usuário ou Senha inválida');
     }
 
     if (!checkPassword(login, senha, usuario.senha)) {
-      throw new AuthorizedException('Usuário ou Senha inválida');
+      throw new AuthenticationException('Usuário ou Senha inválida');
     }
   }
 
@@ -96,12 +96,12 @@ class SessionService extends BaseService<UsuarioModel> {
               reqBody.login = acessToken.login;
             }
           } catch (e) {
-            throw new AuthorizedException('refreshToken inválido');
+            throw new AuthenticationException('refreshToken inválido');
           }
         }
       }
       if (!reqBody.login) {
-        throw new AuthorizedException('refreshToken inválido');
+        throw new AuthenticationException('refreshToken inválido');
       }
     }
 
@@ -117,17 +117,17 @@ class SessionService extends BaseService<UsuarioModel> {
 
     const { username, password } = reqBody;
 
-    const usuario = await this.repository.findOne({ login: username });
+    const usuario = await this.repository.findOne({ login: username.toUpperCase() });
 
     if (!usuario) {
-      throw new AuthorizedException('Usuário ou Senha inválida');
+      throw new AuthenticationException('Usuário ou Senha inválida');
       // return res.status(401).json(geraObjError(''));
     }
 
     if (reqBody.grant_type !== 'refreshToken') {
       if (!checkPassword(usuario.login, password, usuario.senha)) {
         // return res.status(401).json(geraObjError('Usuário ou Senha inválida'));
-        throw new AuthorizedException('Usuário ou Senha inválida');
+        throw new AuthenticationException('Usuário ou Senha inválida');
       }
     }
 

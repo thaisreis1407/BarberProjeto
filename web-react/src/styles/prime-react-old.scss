@@ -1,0 +1,447 @@
+
+/* Column Priorities */
+@media only all {
+  th.p-p-8,
+  td.p-p-8,
+  th.p-p-7,
+  td.p-p-7,
+  th.p-p-6,
+  td.p-p-6,
+  th.p-p-5,
+  td.p-p-5,
+  th.p-p-4,
+  td.p-p-4,
+  th.p-p-3,
+  td.p-p-3,
+  th.p-p-2,
+  td.p-p-2,
+  th.p-p-1,
+  td.p-p-1 {
+      display: none;
+  }
+}
+
+/* Show priority 1 at 320px (20em x 16px) */
+@media screen and (min-width: 20em) {
+  th.p-p-1,
+  td.p-p-1 {
+      display: table-cell;
+  }
+}
+
+/* Show priority 2 at 480px (30em x 16px) */
+@media screen and (min-width: 30em) {
+  th.p-p-2,
+  td.p-p-2 {
+      display: table-cell;
+  }
+}
+
+/* Show priority 3 at 640px (40em x 16px) */
+@media screen and (min-width: 40em) {
+  th.p-p-3,
+  td.p-p-3 {
+      display: table-cell;
+  }
+}
+
+/* Show priority 4 at 800px (50em x 16px) */
+@media screen and (min-width: 50em) {
+  th.p-p-4,
+  td.p-p-4 {
+      display: table-cell;
+  }
+}
+
+/* Show priority 5 at 960px (60em x 16px) */
+@media screen and (min-width: 60em) {
+  th.p-p-5,
+  td.p-p-5 {
+      display: table-cell;
+  }
+}
+
+/* Show priority 6 at 1,120px (70em x 16px) */
+@media screen and (min-width: 70em) {
+  th.p-p-6,
+  td.p-p-6 {
+      display: table-cell;
+  }
+}
+
+/* Show priority 7 at 1,280px (80em x 16px) */
+@media screen and (min-width: 80em) {
+  th.p-p-7,
+  td.p-p-7 {
+      display: table-cell;
+  }
+}
+
+/* Show priority 8 at 1,440px (90em x 16px) */
+@media screen and (min-width: 90em) {
+  th.p-p-8,
+  td.p-p-8 {
+      display: table-cell;
+  }
+}
+
+/* Place your extensions here to make migration to a new release easier. */
+
+div .col-12,
+.md\:col-12,
+.lg\:col-12,
+.col-11,
+.md\:col-11,
+.lg\:col-11,
+.col-10,
+.md\:col-10,
+.lg\:col-10,
+.col-10,
+.md\:col-10,
+.lg\:col-10,
+.col-9,
+.md\:col-9,
+.lg\:col-9,
+.col-9,
+.md\:col-9,
+.lg\:col-9,
+.col-8,
+.md\:col-8,
+.lg\:col-8,
+.col-8,
+.md\:col-8,
+.lg\:col-8,
+.col-7,
+.md\:col-7,
+.lg\:col-7,
+.col-7,
+.md\:col-7,
+.lg\:col-7,
+.col-6,
+.md\:col-6,
+.lg\:col-6,
+.col-6,
+.md\:col-6,
+.lg\:col-6,
+.col-5,
+.md\:col-5,
+.lg\:col-5,
+.col-5,
+.md\:col-5,
+.lg\:col-5,
+.col-4,
+.md\:col-4,
+.lg\:col-4,
+.col-4,
+.md\:col-4,
+.lg\:col-4,
+.col-3,
+.md\:col-3,
+.lg\:col-3,
+.col-3,
+.md\:col-3,
+.lg\:col-3,
+.col-2,
+.md\:col-2,
+.lg\:col-2,
+.col-2,
+.md\:col-2,
+.lg\:col-2,
+.col-1,
+.md\:col-1,
+.lg\:col-1,
+.col-1,
+.md\:col-1,
+.lg\:col-1 {
+  padding: 3px;
+}
+
+.col-12, .sm\:col-12 {
+  padding: 3px;
+}
+
+body .pi {
+  font-size: 1rem;
+}
+
+// diminue tamanho dos checkboxs
+body .p-checkbox {
+  width: 18px;
+  height: 17px;
+}
+
+body .p-checkbox .p-checkbox-box {
+  width: 18px;
+  height: 17px;
+}
+
+body .p-checkbox .p-checkbox-box .p-checkbox-icon {
+  font-size: 16px;
+}
+
+body .p-fluid .p-dropdown {
+  min-width: 80%;
+
+}
+
+
+// calendar
+// body .p-datepicker .p-datepicker-header {
+//   background-color: #007ad9;
+//   color: #fff;
+//   font-weight: bold;
+// }
+
+// .p-datepicker .p-datepicker-next {
+//   top:10px;
+// }
+
+
+// .p-datepicker .p-datepicker-title {
+//   background: #007ad9;
+//   font-weight: bold;
+// }
+
+// body .p-timepicker {
+//   padding: 3px !important;
+//   font-size: 13px !important;
+
+// }
+
+// body .p-datepicker {
+//   padding: 3;
+// }
+
+
+body .p-dropdown-panel .p-dropdown-filter-container {
+  width: 100%;
+}
+
+.p-datepicker-month {
+  background-color: #007ad9;
+  color: #fff;
+  font-weight: bold;
+  font-size: 15px;
+  padding-top: 4px;
+  padding-left: 4px;
+  padding-bottom: 4px;
+  padding-top: 5px;
+}
+
+.p-datepicker-year {
+  background-color: #007ad9;
+  color: #fff;
+  font-weight: bold;
+  font-size: 15px;
+  padding-top: 5px;
+  padding-left: 4px;
+  padding-right: 4px;
+  padding-bottom: 4px;
+
+  margin-left: 0 !important;
+}
+
+.im-pricebutton {
+  background-color: #db2b3c;
+}
+
+// editor
+.ql-container {
+  font-size: 14px !important;
+  font-family: Times, Helvetica, serif !important;
+
+  // h1: {
+  //   font-size: 26px !important;
+  // }
+}
+
+.ql-snow .ql-editor h2 {
+  font-size: 21px !important;
+}
+
+body .p-datepicker .p-datepicker-header .p-datepicker-title select {
+  background: #007ad9;
+  border-color: #007ad9;
+  font-weight: bold;
+  color: #fff;
+  font-size: 15px;
+  padding: 4px;
+}
+
+
+body .p-inputtext.p-error,
+body .p-dropdown.p-error,
+body .p-autocomplete.p-error > .p-inputtext,
+body .p-calendar.p-error > .p-inputtext,
+body .p-chips.p-error > .p-inputtext,
+body .p-checkbox.p-error > .p-checkbox-box,
+
+body .p-radiobutton.p-error > .p-radiobutton-box,
+body .p-inputswitch.p-error,
+body .p-listbox.p-error,
+body .p-multiselect.p-error,
+body .p-spinner.p-error > .p-inputtext,
+body .p-selectbutton.p-error > .p-button,
+body .p-togglebutton.p-error > .p-button {
+  border: 1px solid #ee6002;
+}
+
+body .p-multiselect-panel .p-multiselect-items .p-multiselect-item.p-highlight {
+  color: #333333;
+  background-color: #bfe0fa;
+}
+
+body .p-checkbox .p-checkbox-box.p-highlight {
+  border-color: #007ad9;
+  background-color: #56a0d8;
+  color: #ffffff;
+}
+body .p-checkbox .p-checkbox-box.p-highlight:not(.p-disabled):hover {
+  border-color: #005b9f;
+  background-color: #005b9f;
+  color: #ffffff;
+}
+
+body .p-tree .p-tree-container .p-treenode .p-treenode-content.p-highlight {
+  background-color: #56a0d8;
+  color: #ffffff;
+}
+body .p-tree .p-tree-container .p-treenode .p-treenode-content.p-highlight .p-tree-toggler,
+body .p-tree .p-tree-container .p-treenode .p-treenode-content.p-highlight .p-treenode-icon {
+  color: #ffffff;
+}
+body .p-tree .p-tree-container .p-treenode .p-treenode-content.p-highlight .p-checkbox .p-checkbox-box {
+  border-color: #ffffff;
+}
+body .p-tree .p-tree-container .p-treenode .p-treenode-content.p-highlight-contextmenu {
+  border: 1px dashed #007ad9;
+}
+
+body .p-button.p-button-secondary,
+body .p-buttonset.p-button-secondary > .p-button {
+  color: #ffffff;
+  background-color: #686868;
+  border: 1px solid #686868;
+}
+body .p-button.p-button-secondary:enabled:hover,
+body .p-buttonset.p-button-secondary > .p-button:enabled:hover {
+  background-color: #505050;
+  color: #ffffff;
+  border-color: #505050;
+}
+body .p-button.p-button-secondary:enabled:focus,
+body .p-buttonset.p-button-secondary > .p-button:enabled:focus {
+  -webkit-box-shadow: 0 0 0 0.2em #8dcdff;
+  -moz-box-shadow: 0 0 0 0.2em #8dcdff;
+  box-shadow: 0 0 0 0.2em #8dcdff;
+}
+body .p-button.p-button-secondary:enabled:active,
+body .p-buttonset.p-button-secondary > .p-button:enabled:active {
+  color: #ffffff;
+  background-color: #686868;
+  border: 1px solid #686868;
+}
+
+// danger
+
+body .p-button.p-button-danger,
+body .p-buttonset.p-button-danger > .p-button {
+  color: #ffffff;
+  background-color: #db2b3c;
+  border: 1px solid #db2b3c;
+}
+body .p-button.p-button-danger:enabled:hover,
+body .p-buttonset.p-button-danger > .p-button:enabled:hover {
+  background-color: #b31f2e;
+  color: #ffffff;
+  border-color: #b31f2e;
+}
+body .p-button.p-button-danger:enabled:focus,
+body .p-buttonset.p-button-danger > .p-button:enabled:focus {
+  -webkit-box-shadow: 0 0 0 0.2em #f9b4ba;
+  -moz-box-shadow: 0 0 0 0.2em #f9b4ba;
+  box-shadow: 0 0 0 0.2em #f9b4ba;
+}
+body .p-button.p-button-danger:enabled:active,
+body .p-buttonset.p-button-danger > .p-button:enabled:active {
+  background-color: #a90000;
+  color: #ffffff;
+  border-color: #a90000;
+}
+
+//warning
+body .p-button.p-button-warning, body .p-buttonset.p-button-warning > .p-button {
+  color: #ffffff;
+  background-color: #f77723;
+  border: 1px solid #f77723;
+}
+body .p-button.p-button-warning:enabled:hover, body .p-buttonset.p-button-warning > .p-button:enabled:hover {
+  background-color: #e75f04;
+  color: #ffffff;
+  border-color: #e75f04;
+}
+
+body .p-button.p-button-warning:enabled:active, body .p-buttonset.p-button-warning > .p-button:enabled:active {
+  background-color: #ee6002;
+  color: #ffffff;
+  border-color: #ee6002;
+}
+
+//configurações gerais para disabled
+body .p-component:disabled {
+  opacity: 0.80;
+  filter: alpha(opacity=80);
+}
+
+//para componentes text, dropdown, select,...
+body .p-disabled, body .p-dropdown.p-disabled  {
+  opacity: 0.80;
+  filter: alpha(opacity=80);
+
+}
+//para componentes text, dropdown, select,...
+body .p-dropdown.p-disabled .p-dropdown-trigger, .p-dropdown.p-disabled .p-dropdown-label {
+  opacity: 0.98;
+  filter: alpha(opacity=80);
+}
+
+// configuração do disabled para buttons
+body .p-component.p-button:disabled {
+  opacity: 0.5;
+  filter: alpha(opacity=50);
+}
+
+.p-menuitem.p-disabled { /*Configura o item do menu para ficar da forma q era*/
+  opacity: .50 !important;
+  filter: Alpha(Opacity = .50) !important;
+  background-image: none;
+  background: #fafaf6;
+}
+
+//configurações da seleção de linha no datatable
+body .p-datatable .p-datatable-tbody > tr.p-highlight {
+  background-color: #0b95ff;
+  color: #ffffff;
+}
+body .p-datatable .p-datatable-tbody > tr:nth-child(even).p-highlight {
+  background-color: #0b95ff;
+  color: #ffffff;
+}
+
+// .p-menu {
+//   width: auto;
+//   min-width: 12.5em;
+// }
+
+//gerais
+a,
+button {
+  margin-right: 0.25em;
+}
+
+body .p-button {
+  margin-right: 4px;
+  font-size: 0.8rem;
+}
+
+

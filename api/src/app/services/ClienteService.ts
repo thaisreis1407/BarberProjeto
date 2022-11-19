@@ -10,6 +10,8 @@ import BaseService from './BaseService';
 interface IFiltroCliente {
   id?: number;
   nome?: any;
+  telefone?: any;
+  celular?: any;
 }
 
 class ClienteService extends BaseService<ClienteModel> {
@@ -79,6 +81,14 @@ class ClienteService extends BaseService<ClienteModel> {
 
       if (queryParams.nome) {
         retorno.nome = Like(`${queryParams.nome}%`);
+      }
+
+      if (queryParams.telefone) {
+        retorno.telefone = Like(`${queryParams.telefone}%`);
+      }
+
+      if (queryParams.celular) {
+        retorno.celular = Like(`${queryParams.celular}%`);
       }
     }
 

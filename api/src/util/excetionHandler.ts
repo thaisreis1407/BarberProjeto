@@ -43,10 +43,17 @@ export function processError(err: any): any[] {
       objErro = {
         mensagemDesenvolvedor: 'Falha de validação',
         detalhe: [err.message],
-        mensagemUsuario: err.message,
+        mensagemUsuario: err.errors[0],
+      };
+    } else if (err.name === 'AuthenticationException') {
+      httpCode = 401;
+      objErro = {
+        mensagemDesenvolvedor: 'Falha de validação',
+        detalhe: [err.message],
+        mensagemUsuario: err.errors[0],
       };
     } else if (err.name === 'AuthorizedError') {
-      httpCode = 401;
+      httpCode = 403;
       objErro = {
         mensagemDesenvolvedor: 'Falha de autorização',
         detalhe: err.errors,
