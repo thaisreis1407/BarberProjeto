@@ -19,8 +19,8 @@ export class FormaPagamentoModel extends BaseEntity {
   idConta: number;
   @Column({ name: 'desagio', precision: 18, scale: 6 })
   desagio: number;
-  @Column({ name: 'padrao', length: 5 })
-  padrao: string;
+  @Column({ name: 'padrao'})
+  padrao: boolean;
 
   @ManyToOne(() => ContaModel, { eager: true })
   @JoinColumn({ name: 'id_conta' })

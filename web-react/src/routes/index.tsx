@@ -10,6 +10,7 @@ import React from 'react';
 import AcessDenied from '../pages/AcessDenied';
 import Cliente from '../pages/Cliente';
 import Conta from '../pages/Conta';
+import FormaPagamento from '../pages/FormaPagamento';
 import Home from '../pages/Home';
 import Login from '../pages/Login';
 import NotFound from '../pages/NotFound';
@@ -69,6 +70,24 @@ export default function Routes() {
       'ROLE_LER_PRODUTO_SERVICO',
       'ROLE_INSERIR_PRODUTO_SERVICO',
       'ROLE_ALTERAR_PRODUTO_SERVICO',
+    ],
+    isPrivate: true,
+  });
+
+  /* Forma pagamento  */
+  routes.push({
+    path: '/formasPagamento',
+    element: <FormaPagamento />,
+    roles: ['ROLE_LER_FORMA_PAGAMENTO'],
+    isPrivate: true,
+  });
+  routes.push({
+    path: '/formasPagamento/:option',
+    element: <FormaPagamento />,
+    roles: [
+      'ROLE_LER_FORMA_PAGAMENTO',
+      'ROLE_INSERIR_FORMA_PAGAMENTO',
+      'ROLE_ALTERAR_FORMA_PAGAMENTO',
     ],
     isPrivate: true,
   });

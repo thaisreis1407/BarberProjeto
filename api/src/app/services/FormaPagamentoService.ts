@@ -1,5 +1,5 @@
 /* eslint-disable no-param-reassign */
-import { Like, Repository } from 'typeorm';
+import { Like } from 'typeorm';
 // import { Like } from 'typeorm';
 
 import NotFoundException from '../exceptions/NotFoundException';
@@ -10,7 +10,7 @@ import BaseService from './BaseService';
 
 interface IFiltroFormaPagamento {
   id?: number;
-  nome?: any;
+  descricao?: any;
 }
 
 class FormaPagamentoService extends BaseService<FormaPagamentoModel> {
@@ -49,7 +49,11 @@ class FormaPagamentoService extends BaseService<FormaPagamentoModel> {
   }
 
   async store(reqBody: FormaPagamentoModel): Promise<any> {
-    const formaPagamento = this.repository.create(reqBody);
+    const formaPagamento =  this.repository.create(reqBody);
+
+    if (formaPagamento.padrao) {
+      await this.repository.update({padrao: true}, {padrao: false })
+    }
 
     return this.repository.save(formaPagamento);
   }
@@ -61,6 +65,10 @@ class FormaPagamentoService extends BaseService<FormaPagamentoModel> {
     }
     const formaPagamento = this.repository.create(reqBody);
     formaPagamento.id = id;
+
+    if (formaPagamento.padrao) {
+      await this.repository.update({padrao: true}, {padrao: false })
+    }
 
     return this.repository.save(formaPagamento);
   }
@@ -83,8 +91,8 @@ class FormaPagamentoService extends BaseService<FormaPagamentoModel> {
         retorno.id = queryParams.id;
       }
 
-      if (queryParams.nome) {
-        retorno.nome = Like(`${queryParams.nome}%`);
+      if (queryParams.descricao) {
+        retorno.descricao = Like(`${queryParams.descricao}%`);
       }
     }
 

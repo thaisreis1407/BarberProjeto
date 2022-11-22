@@ -59,10 +59,11 @@ export class ProdutoServicoModel {
 
 export class FormaPagamentoModel {
   id = undefined;
+  idConta: undefined;
   descricao = '';
   conta = new ContaModel();
   desagio = 0;
-  padrao = '';
+  padrao = false;
 }
 
 export class MovimentacaoContaModel {

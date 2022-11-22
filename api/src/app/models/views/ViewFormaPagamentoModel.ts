@@ -12,6 +12,6 @@ export class ViewFormaPagamentoModel extends BaseEntity {
   descricaoConta: string;
   @Column({ name: 'desagio', precision: 18, scale: 6 })
   desagio: number;
-  @Column({ name: 'padrao', length: 5 })
-  padrao: string;
+  @Column({ name: 'padrao'})
+  padrao: boolean;
 }
