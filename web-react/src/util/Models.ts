@@ -22,7 +22,7 @@ export class FornecedorModel {
   id = undefined;
   nome = '';
   telefone = '';
-  diaVencimento = new Date();
+  diaVencimento = undefined;
   inativo = false;
 }
 
@@ -77,6 +77,7 @@ export class MovimentacaoContaModel {
 
 export class AtendenteModel {
   id = undefined;
+  idContaComissao: undefined;
   conta = new ContaModel();
   nome = '';
   inativo = false;

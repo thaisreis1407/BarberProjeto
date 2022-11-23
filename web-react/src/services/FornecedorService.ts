@@ -3,7 +3,7 @@ import { BaseService } from './BaseService';
 
 class FornecedorService extends BaseService {
   constructor() {
-    super(`${ConfigApi.AgendaURL}`);
+    super(`${ConfigApi.FornecedorURL}`);
   }
 
   getFilter(): Filter {

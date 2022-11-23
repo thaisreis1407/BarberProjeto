@@ -9,21 +9,21 @@ import DataTableTh from '../../components/DataTableTh';
 import InputTextTh from '../../components/InputTextTh';
 import LabelTh from '../../components/LabelTh';
 import { showMessage } from '../../components/MessageDialog';
+import { listaDiasVencimento } from '../../config/Constantes';
 import AuthService from '../../services/AuthService';
-import FormaPagamentoService from '../../services/FormaPagamentoService';
+import FornecedorService from '../../services/FornecedorService';
 import {
   getPageParams,
   errorHandle,
   padLeft,
   calcNaxItemsPage,
   isScreenMobile,
-  formatFloat,
 } from '../../util/functions';
 import { StateScreen } from '../constants';
-import FormaPagamentoCrud from './crud';
+import FornecedorCrud from './crud';
 import { Container } from './styles';
 
-export default function FormaPagamento() {
+export default function Fornecedor() {
   // useMemo
   const domParams = useParams();
   const [domSearch] = useSearchParams();
@@ -33,13 +33,13 @@ export default function FormaPagamento() {
     [domParams, domSearch]
   );
 
-  const filterService = useMemo(() => FormaPagamentoService.getFilter(), []);
+  const filterService = useMemo(() => FornecedorService.getFilter(), []);
 
   // useStates
-  const toBack = pageParams.toBack || '/formasPagamento';
+  const toBack = pageParams.toBack || '/fornecedores';
 
   const [filter, setFilter] = useState(filterService);
-  const [formasPagamento, setFormasPagamento] = useState([]);
+  const [fornecedores, setFornecedores] = useState([]);
 
   const [pageLimit, setPageLimit] = useState<number>(filterService.size);
   const [first, setFirst] = useState(0);
@@ -62,9 +62,9 @@ export default function FormaPagamento() {
       _filter.page = _page || 0;
       _filter.size = calcLimit();
       try {
-        const result = await FormaPagamentoService.consulta(_filter);
+        const result = await FornecedorService.consulta(_filter);
 
-        setFormasPagamento(result.content);
+        setFornecedores(result.content);
         setTotalRecords(result.totalElements);
         if (resetPage) {
           setFirst(0);
@@ -104,7 +104,7 @@ export default function FormaPagamento() {
   const excluirRegistro = useCallback(
     async (_id: number) => {
       try {
-        await FormaPagamentoService.delete(_id);
+        await FornecedorService.delete(_id);
         toast.success('Registro excluído com sucesso.');
         handleBuscar(filter);
       } catch (err) {
@@ -116,7 +116,7 @@ export default function FormaPagamento() {
 
   // functions
   function getTitle() {
-    const titleDefault = 'Forma de Pagamento';
+    const titleDefault = 'Fornecedor';
     let titleAdd = '';
 
     if (pageParams.stateScreen === StateScreen.stSearch) {
@@ -180,9 +180,9 @@ export default function FormaPagamento() {
     return (
       <div className="grid">
         <div className="col-12 sm:col-6 lg:col-6 p-fluid">
-          <LabelTh>Descrição</LabelTh>
+          <LabelTh>Nome</LabelTh>
           <InputTextTh
-            value={filter.descricao}
+            value={filter.nome}
             maxLength={100}
             onChange={(e) => {
               setFilterAndSearch({ ...filter, descricao: e.target.value });
@@ -209,15 +209,15 @@ export default function FormaPagamento() {
             icon="pi pi-plus-circle"
             type="button"
             onClick={() => {
-              navigation('/formasPagamento/insert');
+              navigation('/fornecedores/insert');
             }}
-            disabled={!AuthService.checkRoles('ROLE_INSERIR_FORMA_PAGAMENTO')}
+            disabled={!AuthService.checkRoles('ROLE_INSERIR_FORNECEDOR')}
           />
         </div>
 
         <div className="col-12 p-fluid">
           <DataTableTh
-            value={formasPagamento}
+            value={fornecedores}
             style={{ marginBottom: '2px' }}
             paginator
             rows={pageLimit}
@@ -232,26 +232,28 @@ export default function FormaPagamento() {
               header="Id"
               className="grid-col-id"
             />
-            <Column field="descricao" className="grid-col" header="Descrição" />
+            <Column field="nome" className="grid-col" header="Descrição" />
+            <Column field="telefone" className="grid-col grid-col-tel" header="Telefone" />
+
             <Column
-              field="responsavel"
-              className="grid-col"
-              header="Conta"
-              body={(rowData) => rowData.conta?.descricao}
-            />
-            <Column
-              field="desagio"
-              className="grid-col grid-col-val"
-              header="Deságio"
-              body={(rowData) => formatFloat(rowData.desagio, 2)}
+              className="grid-col p-p-5"
+              style={{ width: 140 }}
+              header="Dia Vencimento"
+              body={(rowData) => {
+                const item = listaDiasVencimento.find(
+                  (e) => e.value === rowData.diaVencimento
+                );
+                return item?.label;
+              }}
             />
 
             <Column
               className="grid-col grid-col-center p-p-5"
               style={{ width: 80 }}
-              header="Padrão"
+              header="Inativo"
               body={(rowData) => (rowData.padrao === true ? 'Sim' : 'Não')}
             />
+
             <Column
               className="gid-col-acoes-35"
               bodyStyle={{ textAlign: 'end' }}
@@ -267,14 +269,14 @@ export default function FormaPagamento() {
     return (
       <BotaoMenuGrid
         handles={[
-          () => navigation(`/formasPagamento/${rowData.id}?view`),
-          () => navigation(`/formasPagamento/${rowData.id}`),
+          () => navigation(`/fornecedores/${rowData.id}?view`),
+          () => navigation(`/fornecedores/${rowData.id}`),
           () => confirmaExclusao(rowData.id),
         ]}
         disableds={[
           false,
-          !AuthService.checkRoles('ROLE_ALTERAR_FORMA_PAGAMENTO'),
-          !AuthService.checkRoles('ROLE_EXCLUIR_FORMA_PAGAMENTO'),
+          !AuthService.checkRoles('ROLE_ALTERAR_FORNECEDOR'),
+          !AuthService.checkRoles('ROLE_EXCLUIR_FORNECEDOR'),
         ]}
       />
     );
@@ -282,7 +284,7 @@ export default function FormaPagamento() {
 
   function renderCrud() {
     return (
-      <FormaPagamentoCrud
+      <FornecedorCrud
         idSelected={pageParams.idSelected}
         stateScreen={pageParams.stateScreen}
         onClose={() => {

@@ -8,9 +8,11 @@
 import React from 'react';
 
 import AcessDenied from '../pages/AcessDenied';
+import Atendente from '../pages/Atendente';
 import Cliente from '../pages/Cliente';
 import Conta from '../pages/Conta';
 import FormaPagamento from '../pages/FormaPagamento';
+import Fornecedor from '../pages/Fornecedor';
 import Home from '../pages/Home';
 import Login from '../pages/Login';
 import NotFound from '../pages/NotFound';
@@ -89,6 +91,34 @@ export default function Routes() {
       'ROLE_INSERIR_FORMA_PAGAMENTO',
       'ROLE_ALTERAR_FORMA_PAGAMENTO',
     ],
+    isPrivate: true,
+  });
+
+  /* Atendente  */
+  routes.push({
+    path: '/atendentes',
+    element: <Atendente />,
+    roles: ['ROLE_LER_ATENDENTE'],
+    isPrivate: true,
+  });
+  routes.push({
+    path: '/atendentes/:option',
+    element: <Atendente />,
+    roles: ['ROLE_LER_ATENDENTE', 'ROLE_INSERIR_ATENDENTE', 'ROLE_ALTERAR_ATENDENTE'],
+    isPrivate: true,
+  });
+
+  /* Fornecedor  */
+  routes.push({
+    path: '/fornecedores',
+    element: <Fornecedor />,
+    roles: ['ROLE_LER_FORNECEDOR'],
+    isPrivate: true,
+  });
+  routes.push({
+    path: '/fornecedores/:option',
+    element: <Fornecedor />,
+    roles: ['ROLE_LER_FORNECEDOR', 'ROLE_INSERIR_FORNECEDOR', 'ROLE_ALTERAR_FORNECEDOR'],
     isPrivate: true,
   });
 

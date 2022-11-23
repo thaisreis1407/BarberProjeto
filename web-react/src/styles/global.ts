@@ -287,12 +287,12 @@ export default createGlobalStyle`
 
   .gid-col-acoes-35 {
     width: 35px;
-    text-align: start !important;
+    text-align: end !important;
     font-size: 13px;
   }
   .gid-col-acoes-70 {
     width: 70px;
-    text-align: start !important;
+    text-align: end !important;
     font-size: 13px;
   }
 

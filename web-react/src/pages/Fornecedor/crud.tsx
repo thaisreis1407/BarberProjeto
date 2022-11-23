@@ -3,14 +3,14 @@ import { toast } from 'react-toastify';
 
 import ButtonTh from '../../components/ButtonTh';
 import DropdownTh from '../../components/DropdownTh';
-import InputCurrencyTh from '../../components/InputCurrencyTh';
+import InputMaskTh from '../../components/InputMaskTh';
 import InputTextTh from '../../components/InputTextTh';
 import LabelTh from '../../components/LabelTh';
 import { showMessage } from '../../components/MessageDialog';
-import ContaService from '../../services/ContaService';
-import FormaPagamentoService from '../../services/FormaPagamentoService';
+import { listaDiasVencimento } from '../../config/Constantes';
+import FornecedorService from '../../services/FornecedorService';
 import { errorHandle, validateFields } from '../../util/functions';
-import { FormaPagamentoModel } from '../../util/Models';
+import { FornecedorModel } from '../../util/Models';
 import { StateScreen } from '../constants';
 
 interface IProps {
@@ -19,42 +19,24 @@ interface IProps {
   onClose: (ret?: any) => void;
 }
 
-interface IDropdownItems {
-  value: string;
-  label: string;
-}
-
-export default function FormaPagamentoCrud(props: IProps) {
+export default function FornecedorCrud(props: IProps) {
   const { stateScreen, idSelected, onClose } = props;
 
   // states
-  const [formaPagamento, setFormaPagamento] = useState(new FormaPagamentoModel());
+  const [fornecedor, setFornecedor] = useState(new FornecedorModel());
 
   const [errorLoadRecord, setErrorLoadRecord] = useState(false);
-  const [contas, setContas] = useState<IDropdownItems[]>([]);
 
   // useCallbacks
   const loadRecord = useCallback(async (_id: number) => {
     try {
-      const retorno = await FormaPagamentoService.buscaPorId(_id);
-      setFormaPagamento(retorno);
+      const retorno = await FornecedorService.buscaPorId(_id);
+      setFornecedor(retorno);
       setErrorLoadRecord(false);
     } catch (err) {
       setErrorLoadRecord(true);
       errorHandle(err);
     }
-  }, []);
-
-  const loadConta = useCallback(async () => {
-    const r = await ContaService.consulta({ limit: 50 });
-
-    const retorno = r.content.map((e: any) => {
-      return {
-        label: e.descricao,
-        value: e.id,
-      };
-    });
-    setContas(retorno);
   }, []);
 
   // funcoes
@@ -85,17 +67,11 @@ export default function FormaPagamentoCrud(props: IProps) {
   async function salvarRecord() {
     try {
       let retorno: any;
-      const formaPagamentoSalvar = { ...formaPagamento };
-      formaPagamentoSalvar.conta = {
-        id: formaPagamento.idConta,
-        descricao: '',
-        saldo: 0,
-      };
 
       if (stateScreen === StateScreen.stInsert) {
-        retorno = await FormaPagamentoService.adicionar(formaPagamentoSalvar);
+        retorno = await FornecedorService.adicionar(fornecedor);
       } else {
-        retorno = await FormaPagamentoService.atualizar(formaPagamentoSalvar);
+        retorno = await FornecedorService.atualizar(fornecedor);
       }
       toast.success('Registro salvo com sucesso.');
       onClose(retorno);
@@ -106,51 +82,35 @@ export default function FormaPagamentoCrud(props: IProps) {
 
   // useEffects
   useEffect(() => {
-    loadConta();
     if (stateScreen === StateScreen.stUpdate || stateScreen === StateScreen.stView) {
       loadRecord(idSelected);
     } else if (stateScreen === StateScreen.stInsert) {
-      const novo = new FormaPagamentoModel();
+      const novo = new FornecedorModel();
 
-      setFormaPagamento(novo);
+      setFornecedor(novo);
     }
-  }, [loadRecord, idSelected, stateScreen, loadConta]);
+  }, [loadRecord, idSelected, stateScreen]);
 
   // render principal
   return (
     <div className="grid">
-      <div className="col-12 sm:col-4 lg:col-4 p-fluid">
-        <LabelTh>Descrição</LabelTh>
+      <div className="col-12 sm:col-6 lg:col-5 p-fluid">
+        <LabelTh>Nome</LabelTh>
         <InputTextTh
-          value={formaPagamento.descricao}
+          value={fornecedor.nome}
           maxLength={40}
           required
           disabled={viewMode()}
           onChange={(e) => {
-            setFormaPagamento({ ...formaPagamento, descricao: e.target.value });
+            setFornecedor({ ...fornecedor, nome: e.target.value });
           }}
         />
       </div>
 
-      <div className="col-6 sm:col-4 lg:col-4 p-fluid">
-        <LabelTh>Conta</LabelTh>
+      <div className="col-6 sm:col-3 lg:col-2 p-fluid">
+        <LabelTh>Inativo</LabelTh>
         <DropdownTh
-          value={formaPagamento.idConta}
-          options={contas}
-          disabled={viewMode()}
-          filterInputAutoFocus={false}
-          required
-          placeholder="Selecione"
-          onChange={(e) => {
-            setFormaPagamento({ ...formaPagamento, idConta: e.target.value });
-          }}
-        />
-      </div>
-
-      <div className="col-6 sm:col-2 lg:col-2 p-fluid">
-        <LabelTh>Padrão</LabelTh>
-        <DropdownTh
-          value={formaPagamento.padrao}
+          value={fornecedor.inativo}
           options={[
             {
               value: true,
@@ -165,19 +125,35 @@ export default function FormaPagamentoCrud(props: IProps) {
           filterInputAutoFocus={false}
           placeholder="Selecione"
           onChange={(e) => {
-            setFormaPagamento({ ...formaPagamento, padrao: e.target.value });
+            setFornecedor({ ...fornecedor, inativo: e.target.value });
           }}
         />
       </div>
 
       <div className="col-6 sm:col-3 lg:col-2 p-fluid">
-        <LabelTh>Deságio</LabelTh>
-        <InputCurrencyTh
-          value={formaPagamento.desagio}
-          digits={2}
+        <LabelTh>Dia Vencimento</LabelTh>
+        <DropdownTh
+          value={fornecedor.diaVencimento}
+          options={listaDiasVencimento}
           disabled={viewMode()}
-          onChangeNumber={(_e, n) => {
-            setFormaPagamento({ ...formaPagamento, desagio: n });
+          filterInputAutoFocus={false}
+          placeholder="Selecione"
+          filter
+          required
+          onChange={(e) => {
+            setFornecedor({ ...fornecedor, diaVencimento: e.target.value });
+          }}
+        />
+      </div>
+
+      <div className="col-12 sm:col-4 lg:col-3 p-fluid">
+        <LabelTh>Telefone</LabelTh>
+        <InputMaskTh
+          mask="(99)9999-9999"
+          value={fornecedor.telefone}
+          disabled={viewMode()}
+          onChange={(e) => {
+            setFornecedor({ ...fornecedor, telefone: e.target.value });
           }}
         />
       </div>
@@ -188,7 +164,7 @@ export default function FormaPagamentoCrud(props: IProps) {
             className="p-button-success"
             icon="pi pi-save"
             label="Salvar"
-            disabled={!validateFields(formaPagamento, ['descricao', 'idConta'])}
+            disabled={!validateFields(fornecedor, ['nome', 'diaVencimento'])}
             showConfirmation
             onClick={handleSave}
           />

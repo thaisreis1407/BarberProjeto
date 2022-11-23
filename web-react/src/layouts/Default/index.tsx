@@ -18,8 +18,7 @@ export default function Defaultlayout(props: IProps) {
   const { children } = props;
 
   const [exibindoMenu, setExibindoMenu] = useState(false);
-
-  const menu = createMenu(setExibindoMenu);
+  const [menu] = useState(createMenu(setExibindoMenu));
 
   return (
     <Wrapper>

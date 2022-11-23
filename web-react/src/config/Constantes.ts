@@ -139,3 +139,20 @@ export const listaUfs = [
   { label: 'SE', value: 'SE' },
   { label: 'TO', value: 'TO' },
 ];
+
+export const listaDiasVencimento = [
+  { label: 'Sem dia Definido', value: 100 },
+  { label: 'Toda Segunda', value: 101 },
+  { label: 'Toda Terça', value: 102 },
+  { label: 'Toda Quarta', value: 103 },
+  { label: 'Toda Quinta', value: 104 },
+  { label: 'Toda Sexta', value: 105 },
+  { label: 'Todo Sábado', value: 106 },
+  { label: 'Dia 01', value: 1 },
+  { label: 'Dia 05', value: 5 },
+  { label: 'Dia 10', value: 10 },
+  { label: 'Dia 15', value: 15 },
+  { label: 'Dia 20', value: 20 },
+  { label: 'Dia 25', value: 25 },
+  { label: 'Dia 30', value: 30 },
+];
