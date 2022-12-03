@@ -13,6 +13,7 @@ class AgendamentoService extends BaseService {
   }
 
   async abrirAtendimento(id: number): Promise<any> {
+    this.setLoading(true);
     try {
       const response = await api.put(`${this.url}/${id}/abrirAtendimento`, {});
       return response.data;
@@ -22,6 +23,7 @@ class AgendamentoService extends BaseService {
   }
 
   async excluirAtendimento(id: number): Promise<any> {
+    this.setLoading(true);
     try {
       const response = await api.put(`${this.url}/${id}/abrirAtendimento`, {});
       return response.data;
@@ -31,6 +33,7 @@ class AgendamentoService extends BaseService {
   }
 
   async consultarPorData(data: Date): Promise<any> {
+    this.setLoading(true);
     try {
       const filterGet = geraFiltroHttp({ data });
       const response = await api.get(`${this.url}${filterGet}`);

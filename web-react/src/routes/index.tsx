@@ -11,6 +11,7 @@ import AcessDenied from '../pages/AcessDenied';
 import Atendente from '../pages/Atendente';
 import Cliente from '../pages/Cliente';
 import Conta from '../pages/Conta';
+import DuplicataPagar from '../pages/DuplicataPagar';
 import FormaPagamento from '../pages/FormaPagamento';
 import Fornecedor from '../pages/Fornecedor';
 import Home from '../pages/Home';
@@ -119,6 +120,24 @@ export default function Routes() {
     path: '/fornecedores/:option',
     element: <Fornecedor />,
     roles: ['ROLE_LER_FORNECEDOR', 'ROLE_INSERIR_FORNECEDOR', 'ROLE_ALTERAR_FORNECEDOR'],
+    isPrivate: true,
+  });
+
+  /* Duplicata pagar  */
+  routes.push({
+    path: '/duplicatasPagar',
+    element: <DuplicataPagar />,
+    roles: ['ROLE_LER_DUPLICATA_PAGAR'],
+    isPrivate: true,
+  });
+  routes.push({
+    path: '/duplicatasPagar/:option',
+    element: <DuplicataPagar />,
+    roles: [
+      'ROLE_LER_DUPLICATA_PAGAR',
+      'ROLE_INSERIR_DUPLICATA_PAGAR',
+      'ROLE_ALTERAR_DUPLICATA_PAGAR',
+    ],
     isPrivate: true,
   });
 

@@ -7,22 +7,6 @@ type HandleExibindoMenu = (visible: boolean) => void;
 export default function createMenu(setExibindoMenu: HandleExibindoMenu): any[] {
   const navigate = useNavigate();
 
-  // const menuReturn: any = [
-  //   {
-  //     label: 'Home',
-  //     title: 'Home',
-  //     icon: 'pi pi-fw pi-home',
-  //     to: '/home',
-  //     command: () => setExibindoMenu(false),
-  //   },
-  //   {
-  //     label: 'Mesas',
-  //     title: 'Mesas',
-  //     icon: 'pi pi-fw pi-table',
-  //     to: '/mesas',
-  //   },
-  // ];
-
   const menuReturn: any = [
     {
       label: 'Home',

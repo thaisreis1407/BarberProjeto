@@ -1,12 +1,11 @@
-
+import { Calendar, CalendarProps } from 'primereact/calendar';
 import React from 'react';
-import { Calendar } from 'primereact/calendar';
 
-interface IProps {
-  required: boolean,
-  className: string,
-  disabled: boolean,
-  value: Date
+interface IProps extends CalendarProps {
+  required?: boolean;
+  className?: string;
+  disabled?: boolean;
+  value: Date;
 }
 
 export default function CalendarTh(props: IProps) {
@@ -18,4 +17,5 @@ export default function CalendarTh(props: IProps) {
 CalendarTh.defaultProps = {
   required: false,
   disabled: false,
+  className: '',
 };

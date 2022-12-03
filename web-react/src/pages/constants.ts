@@ -24,3 +24,9 @@ export const CoresMesa = {
   Livre: '#00bf60',
   Inativa: '#f0f0f0',
 };
+
+export const StatusDupl = {
+  ABERTO: 0,
+  PARCIAL: 1,
+  QUITADA: 2,
+};
