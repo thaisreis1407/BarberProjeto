@@ -1,4 +1,4 @@
-import { Connection, Repository, getConnection, BaseEntity } from 'typeorm';
+import { Connection, Repository, getConnection, BaseEntity, FindOperator, Raw } from 'typeorm';
 
 import { montaPaginacao } from '../../util/functions';
 import { IPageable } from '../../util/tipos';
@@ -20,7 +20,7 @@ class BaseService<T extends BaseEntity> {
     this.repository = this.connection.getRepository<T>(this.modelType);
   }
 
-  async findAllPageable<T>(
+  async findAllPageable<T extends BaseEntity>(
     repository: Repository<T>,
     queryParams: any,
     opcoesExtras?: any
@@ -51,6 +51,10 @@ class BaseService<T extends BaseEntity> {
       totalElements: tot,
       content,
     };
+  }
+
+  iLikeUnaccent(value: string): FindOperator<any> {
+    return Raw((nome1) => `unaccent(${nome1}) ILike unaccent('${value}')`);
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars

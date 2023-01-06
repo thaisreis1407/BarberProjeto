@@ -18,6 +18,7 @@ import Home from '../pages/Home';
 import Login from '../pages/Login';
 import NotFound from '../pages/NotFound';
 import ProdutoServico from '../pages/ProdutoServico';
+import Usuario from '../pages/Usuario';
 import Switch from './Switch';
 
 /**
@@ -141,6 +142,19 @@ export default function Routes() {
     isPrivate: true,
   });
 
+  /* Usuario  */
+  routes.push({
+    path: '/usuarios',
+    element: <Usuario />,
+    roles: ['ROLE_LER_USUARIO'],
+    isPrivate: true,
+  });
+  routes.push({
+    path: '/usuarios/:option',
+    element: <Usuario />,
+    roles: ['ROLE_LER_USUARIO', 'ROLE_INSERIR_USUARIO', 'ROLE_ALTERAR_USUARIO'],
+    isPrivate: true,
+  });
   routes.push({ path: '/denied', element: <AcessDenied />, isPrivate: true });
   routes.push({ path: '*', element: <NotFound />, isPrivate: true });
 

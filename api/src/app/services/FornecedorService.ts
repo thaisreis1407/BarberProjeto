@@ -1,5 +1,5 @@
 /* eslint-disable no-param-reassign */
-import { Like, Repository } from 'typeorm';
+
 // import { Like } from 'typeorm';
 
 import NotFoundException from '../exceptions/NotFoundException';
@@ -36,9 +36,13 @@ class FornecedorService extends BaseService<FornecedorModel> {
       throw new NotFoundException();
     }
 
-    const fornecedors = await this.findAllPageable<FornecedorModel>(this.repository, queryParams, {
-      order: { id: 'ASC' },
-    });
+    const fornecedors = await this.findAllPageable<FornecedorModel>(
+      this.repository,
+      queryParams,
+      {
+        order: { id: 'ASC' },
+      }
+    );
 
     return fornecedors;
   }
@@ -60,7 +64,6 @@ class FornecedorService extends BaseService<FornecedorModel> {
     return this.repository.save(fornecedor);
   }
 
-
   async delete(id: number): Promise<any> {
     const fornecedorExist = await this.repository.findOne(id || 0);
     if (!fornecedorExist) {
@@ -68,7 +71,6 @@ class FornecedorService extends BaseService<FornecedorModel> {
     }
     await this.repository.delete(id);
   }
-
 
   // override
   montaFiltro(queryParams: any): IFiltroFornecedor {
@@ -80,7 +82,7 @@ class FornecedorService extends BaseService<FornecedorModel> {
       }
 
       if (queryParams.descricao) {
-        retorno.descricao = Like(`${queryParams.descricao}%`);
+        retorno.descricao = this.iLikeUnaccent(`${queryParams.descricao}%`);
       }
     }
 

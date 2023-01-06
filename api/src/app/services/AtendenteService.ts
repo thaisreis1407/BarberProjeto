@@ -1,5 +1,5 @@
 /* eslint-disable no-param-reassign */
-import { Like } from 'typeorm';
+
 // import { Like } from 'typeorm';
 
 import NotFoundException from '../exceptions/NotFoundException';
@@ -84,7 +84,7 @@ class AtendenteService extends BaseService<AtendenteModel> {
       }
 
       if (queryParams.nome) {
-        retorno.nome = Like(`${queryParams.nome}%`);
+        retorno.nome = this.iLikeUnaccent(`${queryParams.nome}%`);
       }
     }
 

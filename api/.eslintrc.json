@@ -36,7 +36,8 @@
         }
       }
     ],
-    "prettier/prettier": "off",
+    // "prettier/prettier": "error",
+    "prettier/prettier": ["error", { "endOfLine": "lf" }],
     "class-methods-use-this": "off",
     "import/prefer-default-export": "off",
     "no-shadow": "off",
@@ -73,8 +74,11 @@
 
   },
   "settings": {
-      "import/resolver": {
-          "typescript": {}
-      }
-  }
+    "import/resolver": {
+        "node": {
+          "extensions": [".js", ".ts"],
+          "paths": ["node_modules", "src/"]
+        }
+    }
+}
 }

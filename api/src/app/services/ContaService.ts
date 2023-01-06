@@ -1,6 +1,4 @@
 /* eslint-disable no-param-reassign */
-import { Like } from 'typeorm';
-// import { Like } from 'typeorm';
 
 import NotFoundException from '../exceptions/NotFoundException';
 // import ValidationException from '../exceptions/ValidationException';
@@ -90,7 +88,7 @@ class ContaService extends BaseService<ContaModel> {
       }
       // Como eu retorno todo o registro sendo que o retorno é somente os campos
       if (queryParams.descricao) {
-        retorno.descricao = Like(`${queryParams.descricao}%`);
+        retorno.descricao = this.iLikeUnaccent(`${queryParams.descricao}%`);
       }
     }
     return retorno;

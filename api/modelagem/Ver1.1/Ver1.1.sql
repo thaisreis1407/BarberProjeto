@@ -1,3 +1,6 @@
+
+create extension unaccent;
+
 drop view view_forma_pagamento;
 ALTER TABLE forma_pagamento ALTER COLUMN padrao TYPE BOOLEAN USING padrao::boolean;
 

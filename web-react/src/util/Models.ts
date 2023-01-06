@@ -1,11 +1,9 @@
 export class UsuarioModel {
   id = undefined;
-  login = '';
-  idColaborador = undefined;
-  idPapel = undefined;
-  senha = '';
-  dataCadastro = undefined;
   inativo = false;
+  login = '';
+  perfil = '';
+  senha = '';
 }
 
 export class ClienteModel {

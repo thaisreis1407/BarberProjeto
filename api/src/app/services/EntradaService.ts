@@ -1,5 +1,3 @@
-import { Like } from 'typeorm';
-
 /* eslint-disable no-param-reassign */
 // import { Like } from 'typeorm';
 
@@ -95,7 +93,7 @@ class EntradaService extends BaseService<EntradaModel> {
       }
 
       if (queryParams.nome) {
-        retorno.nome = Like(`${queryParams.nome}%`);
+        retorno.nome = this.iLikeUnaccent(`${queryParams.nome}%`);
       }
     }
 

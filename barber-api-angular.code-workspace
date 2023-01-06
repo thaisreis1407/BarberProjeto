@@ -37,7 +37,7 @@
     "breadcrumbs.enabled": false,
     "editor.parameterHints.enabled": false, // tira os hints de ajuda
     "workbench.colorTheme": "Dracula",
-	   "prettier.endOfLine": "crlf",
+	   "prettier.endOfLine": "lf",
 
 
     "[javascript]": {

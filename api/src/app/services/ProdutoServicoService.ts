@@ -1,6 +1,5 @@
 /* eslint-disable no-param-reassign */
-import { Like } from 'typeorm';
-// import { Like } from 'typeorm';
+
 
 import NotFoundException from '../exceptions/NotFoundException';
 // import ValidationException from '../exceptions/ValidationException';
@@ -96,11 +95,11 @@ class ProdutoServicoService extends BaseService<ProdutoServicoModel> {
       }
 
       if (queryParams.nome) {
-        retorno.nome = Like(`${queryParams.nome}%`);
+        retorno.nome = this.iLikeUnaccent(`${queryParams.nome}%`);
       }
 
       if (queryParams.bloqueado) {
-        retorno.bloqueado = Like(`${queryParams.bloqueado}%`);
+        retorno.bloqueado = this.iLikeUnaccent(`${queryParams.bloqueado}%`);
       }
 
       if (queryParams.tipo) {

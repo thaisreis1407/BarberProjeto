@@ -49,7 +49,6 @@ class UsuarioService extends BaseService<UsuarioModel> {
 
   async store(reqBody: UsuarioModel): Promise<any> {
     reqBody.login = reqBody.login.toUpperCase();
-    reqBody.senha = md5(reqBody.senha);
     const userExists = await this.repository.findOne({
       where: { login: reqBody.login },
     });
@@ -57,16 +56,25 @@ class UsuarioService extends BaseService<UsuarioModel> {
     if (userExists) {
       throw new ValidationException('Usuario já existe');
     }
+
+    reqBody.senha = md5(reqBody.senha);
+
     const usuario = this.repository.create(reqBody);
     return this.repository.save(usuario);
   }
 
   async update(id: number, reqBody: UsuarioModel): Promise<any> {
     reqBody.login = reqBody.login.toUpperCase();
-    reqBody.senha = md5(reqBody.senha);
+
     const usuarioExist = await this.repository.findOne(id || 0);
     if (!usuarioExist) {
       throw new NotFoundException('Usuário não existe');
+    }
+
+    if (reqBody.senha) {
+      reqBody.senha = md5(reqBody.senha);
+    } else {
+      reqBody.senha = usuarioExist.senha;
     }
 
     const usuario = this.repository.create(reqBody);
@@ -96,7 +104,7 @@ class UsuarioService extends BaseService<UsuarioModel> {
         retorno.login = queryParams.login;
       }
 
-      if (queryParams.inativo) {
+      if (queryParams.inativo === true || queryParams.inativo === false) {
         retorno.inativo = queryParams.inativo;
       }
     }

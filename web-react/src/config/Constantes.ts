@@ -156,3 +156,10 @@ export const listaDiasVencimento = [
   { label: 'Dia 25', value: 25 },
   { label: 'Dia 30', value: 30 },
 ];
+
+export const listaPerfis = [
+  { label: 'Administrador', value: 'ADMINISTRADOR' },
+  { label: 'Gerente', value: 'GERENTE' },
+  { label: 'Funcionário', value: 'FUNCIONARIO' },
+  { label: 'Cliente', value: 'CLIENTE' },
+];

@@ -80,7 +80,7 @@ class ClienteService extends BaseService<ClienteModel> {
       }
 
       if (queryParams.nome) {
-        retorno.nome = Like(`${queryParams.nome}%`);
+        retorno.nome = this.iLikeUnaccent(`${queryParams.nome}%`);
       }
 
       if (queryParams.telefone) {

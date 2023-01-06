@@ -1,11 +1,15 @@
+import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
+import { showMessage } from '../components/MessageDialog';
 import AuthService from '../services/AuthService';
+import { logout } from '../store/modules/auth/actions';
 
 type HandleExibindoMenu = (visible: boolean) => void;
 
 export default function createMenu(setExibindoMenu: HandleExibindoMenu): any[] {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const menuReturn: any = [
     {
@@ -231,7 +235,11 @@ export default function createMenu(setExibindoMenu: HandleExibindoMenu): any[] {
       label: 'Sair',
       icon: 'pi pi-power-off',
       command: (): void => {
-        //
+        showMessage('Confirmação', 'Deseja saír do sistema??', (idx: any) => {
+          if (idx === 1) {
+            dispatch(logout());
+          }
+        });
       },
     },
   ];

@@ -1,4 +1,3 @@
-import { Like } from 'typeorm';
 
 
 /* eslint-disable no-param-reassign */
@@ -52,16 +51,16 @@ class DuplicataPagarService extends BaseService<DuplicataPagarModel> {
       throw new NotFoundException();
     }
 
-    if (queryParams.resumo === '') {
+
       return this.findAllPageable<ViewDuplicataPagarModel>(this.viewRepository, queryParams, {
         order: { id: 'ASC' },
       });
-    }
 
-    return this.findAllPageable<DuplicataPagarModel>(this.repository, queryParams, {
-      order: { id: 'ASC' },
-      relations: ['duplicataPagamento', 'fornecedor'],
-    });
+
+    // return this.findAllPageable<DuplicataPagarModel>(this.repository, queryParams, {
+    //   order: { id: 'ASC' },
+    //   relations: ['duplicataPagamento', 'fornecedor'],
+    // });
   }
 
   async store(reqBody: DuplicataPagarModel): Promise<any> {
@@ -182,7 +181,7 @@ class DuplicataPagarService extends BaseService<DuplicataPagarModel> {
       }
 
       if (queryParams.nome) {
-        retorno.nome = Like(`${queryParams.nome}%`);
+        retorno.nome = this.iLikeUnaccent(`${queryParams.nome}%`);
       }
     }
 

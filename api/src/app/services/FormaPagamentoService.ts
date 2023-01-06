@@ -1,6 +1,4 @@
 /* eslint-disable no-param-reassign */
-import { Like } from 'typeorm';
-// import { Like } from 'typeorm';
 
 import NotFoundException from '../exceptions/NotFoundException';
 // import ValidationException from '../exceptions/ValidationException';
@@ -14,7 +12,8 @@ interface IFiltroFormaPagamento {
 }
 
 class FormaPagamentoService extends BaseService<FormaPagamentoModel> {
-  viewRepository = this.connection.getRepository<ViewFormaPagamentoModel>(ViewFormaPagamentoModel);
+  viewRepository =
+    this.connection.getRepository<ViewFormaPagamentoModel>(ViewFormaPagamentoModel);
   constructor(nomeConexao = '') {
     super(nomeConexao, FormaPagamentoModel);
   }
@@ -44,15 +43,16 @@ class FormaPagamentoService extends BaseService<FormaPagamentoModel> {
       });
     }
     return this.findAllPageable<FormaPagamentoModel>(this.repository, queryParams, {
-      order: { id: 'ASC' },  relations: ['conta'] ,
+      order: { id: 'ASC' },
+      relations: ['conta'],
     });
   }
 
   async store(reqBody: FormaPagamentoModel): Promise<any> {
-    const formaPagamento =  this.repository.create(reqBody);
+    const formaPagamento = this.repository.create(reqBody);
 
     if (formaPagamento.padrao) {
-      await this.repository.update({padrao: true}, {padrao: false })
+      await this.repository.update({ padrao: true }, { padrao: false });
     }
 
     return this.repository.save(formaPagamento);
@@ -67,12 +67,11 @@ class FormaPagamentoService extends BaseService<FormaPagamentoModel> {
     formaPagamento.id = id;
 
     if (formaPagamento.padrao) {
-      await this.repository.update({padrao: true}, {padrao: false })
+      await this.repository.update({ padrao: true }, { padrao: false });
     }
 
     return this.repository.save(formaPagamento);
   }
-
 
   async delete(id: number): Promise<any> {
     const formaPagamentoExist = await this.repository.findOne(id || 0);
@@ -92,7 +91,7 @@ class FormaPagamentoService extends BaseService<FormaPagamentoModel> {
       }
 
       if (queryParams.descricao) {
-        retorno.descricao = Like(`${queryParams.descricao}%`);
+        retorno.descricao = this.iLikeUnaccent(`${queryParams.descricao}%`);
       }
     }
 
