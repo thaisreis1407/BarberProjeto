@@ -1,12 +1,28 @@
+import { Button } from 'primereact/button';
+import { Column } from 'primereact/column';
 import React, { useCallback, useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 
 import ButtonTh from '../../components/ButtonTh';
+import CalendarTh from '../../components/CalendarTh';
+import DataTableTh from '../../components/DataTableTh';
+import DropdownTh from '../../components/DropdownTh';
+import InputCurrencyTh from '../../components/InputCurrencyTh';
+import InputTextareaTh from '../../components/InputTextareaTh';
 import InputTextTh from '../../components/InputTextTh';
 import LabelTh from '../../components/LabelTh';
 import { showMessage } from '../../components/MessageDialog';
 import DuplicataPagarService from '../../services/DuplicataPagarService';
-import { errorHandle, formatFloat, validateFields } from '../../util/functions';
+import FornecedorService from '../../services/FornecedorService';
+import {
+  cloneObj,
+  errorHandle,
+  formatDate,
+  formatFloat,
+  padLeft,
+  strToDate,
+  validateFields,
+} from '../../util/functions';
 import { DuplicataPagarModel } from '../../util/Models';
 import { StateScreen } from '../constants';
 
@@ -15,20 +31,27 @@ interface IProps {
   idSelected: number;
   onClose: (ret?: any) => void;
 }
+
+interface IDropdownItems {
+  value: string;
+  label: string;
+}
+
 export default function DuplicataPagarCrud(props: IProps) {
   const { stateScreen, idSelected, onClose } = props;
 
   // states
   const [duplicataPagar, setDuplicataPagar] = useState(new DuplicataPagarModel());
 
-  const [senha, setSenha] = useState('');
-  const [confirmSenha, setConfirmSenha] = useState('');
   const [errorLoadRecord, setErrorLoadRecord] = useState(false);
+  const [fornecedores, setFornecedores] = useState<IDropdownItems[]>([]);
 
   // useCallbacks
   const loadRecord = useCallback(async (_id: number) => {
     try {
       const retorno = await DuplicataPagarService.buscaPorId(_id);
+      retorno.dataCompra = strToDate(retorno.dataCompra);
+      retorno.dataVencimento = strToDate(retorno.dataVencimento);
       setDuplicataPagar(retorno);
       setErrorLoadRecord(false);
     } catch (err) {
@@ -37,9 +60,32 @@ export default function DuplicataPagarCrud(props: IProps) {
     }
   }, []);
 
+  const loadFornecedores = useCallback(async () => {
+    const r = await FornecedorService.consulta({ limit: 999999 });
+
+    const retorno = r.content.map((e: any) => {
+      return {
+        label: e.nome,
+        value: e.id,
+      };
+    });
+    setFornecedores(retorno);
+  }, []);
+
   // funcoes
   function viewMode() {
     return stateScreen === StateScreen.stView || errorLoadRecord;
+  }
+
+  function buscaNomeStatus(status: number): string {
+    switch (status) {
+      case 0:
+        return 'Aberto';
+      case 1:
+        return 'Parcial';
+      default:
+        return 'Quitado';
+    }
   }
 
   function handleBack() {
@@ -62,20 +108,26 @@ export default function DuplicataPagarCrud(props: IProps) {
     }
   }
 
-  async function salvarRecord() {
-    if (senha || confirmSenha) {
-      if (senha !== confirmSenha) {
-        toast.warn('Senha e confirmação não conferem.');
-        return;
+  function handleEstornar(id: number) {
+    showMessage('Confirmação', 'Deseja estornar quitação?', (idx: number) => {
+      if (idx === 1) {
+        // estorno
       }
-    }
+    });
+  }
 
+  async function salvarRecord() {
     try {
       let retorno: any;
+      const duplicataPagarSalvar = cloneObj(duplicataPagar);
+      duplicataPagarSalvar.fornecedor = {
+        id: duplicataPagarSalvar.idFornecedor,
+      };
+
       if (stateScreen === StateScreen.stInsert) {
-        retorno = await DuplicataPagarService.adicionar(duplicataPagar);
+        retorno = await DuplicataPagarService.adicionar(duplicataPagarSalvar);
       } else {
-        retorno = await DuplicataPagarService.atualizar(duplicataPagar);
+        retorno = await DuplicataPagarService.atualizar(duplicataPagarSalvar);
       }
       toast.success('Registro salvo com sucesso.');
       onClose(retorno);
@@ -86,38 +138,112 @@ export default function DuplicataPagarCrud(props: IProps) {
 
   // useEffects
   useEffect(() => {
+    loadFornecedores();
     if (stateScreen === StateScreen.stUpdate || stateScreen === StateScreen.stView) {
       loadRecord(idSelected);
     } else if (stateScreen === StateScreen.stInsert) {
       const novo = new DuplicataPagarModel();
-
       setDuplicataPagar(novo);
     }
-    setSenha('');
-    setConfirmSenha('');
-  }, [loadRecord, idSelected, stateScreen]);
-
-  // const perfilAdministrador = AuthService.getUsuario().idDuplicataPagarPerfil === 1;
+  }, [loadRecord, idSelected, stateScreen, loadFornecedores]);
 
   // render principal
   return (
     <div className="grid">
-      {/* <div className="col-12 sm:col-8 lg:col-8 p-fluid">
-        <LabelTh>Descricao</LabelTh>
-        <InputTextTh
-          value={duplicataPagar.descricao}
-          maxLength={40}
+      <div className="col-6 sm:col-4 lg:col-3 p-fluid">
+        <LabelTh>Data Compra</LabelTh>
+        <CalendarTh
+          readOnlyInput
+          appendTo={document.body}
+          dateFormat="dd/mm/yy"
+          yearNavigator
+          disabled={viewMode() || duplicataPagar.status !== 0}
           required
-          disabled={viewMode()}
-          onChange={(e) => {
-            setDuplicataPagar({ ...duplicataPagar, descricao: e.target.value });
+          value={duplicataPagar.dataCompra}
+          yearRange="2010:2040"
+          onChange={(e: any) => {
+            setDuplicataPagar({ ...duplicataPagar, dataCompra: e.value });
           }}
         />
       </div>
-      <div className="col-6 sm:col-4 lg:col-4 p-fluid">
-        <LabelTh>Saldo</LabelTh>
-        <InputTextTh disabled value={formatFloat(duplicataPagar.saldo, 2)} maxLength={40} />
-      </div> */}
+
+      <div className="col-6 sm:col-4 lg:col-3 p-fluid">
+        <LabelTh>Data Vencimento</LabelTh>
+        <CalendarTh
+          readOnlyInput
+          appendTo={document.body}
+          dateFormat="dd/mm/yy"
+          yearNavigator
+          disabled={viewMode() || duplicataPagar.status !== 0}
+          required
+          value={duplicataPagar.dataVencimento}
+          yearRange="2010:2040"
+          onChange={(e: any) => {
+            setDuplicataPagar({ ...duplicataPagar, dataVencimento: e.value });
+          }}
+        />
+      </div>
+
+      <div className="col-12 sm:col-4 lg:col-6 p-fluid">
+        <LabelTh>Fornecedor</LabelTh>
+        <DropdownTh
+          value={duplicataPagar.idFornecedor}
+          options={fornecedores}
+          disabled={viewMode() || duplicataPagar.status !== 0}
+          filterInputAutoFocus={false}
+          required
+          placeholder="Selecione"
+          onChange={(e) => {
+            setDuplicataPagar({ ...duplicataPagar, idFornecedor: e.target.value });
+          }}
+        />
+      </div>
+
+      <div className="col-6 sm:col-3 lg:col-3 p-fluid">
+        <LabelTh>Status</LabelTh>
+        <InputTextTh value={buscaNomeStatus(duplicataPagar.status)} disabled />
+      </div>
+
+      <div className="col-6 sm:col-3 lg:col-3 p-fluid">
+        <LabelTh>Valor</LabelTh>
+        <InputCurrencyTh
+          value={duplicataPagar.valor}
+          digits={2}
+          disabled={viewMode() || duplicataPagar.status !== 0}
+          required
+          onChangeNumber={(_e, n) => {
+            setDuplicataPagar({ ...duplicataPagar, valor: n });
+          }}
+        />
+      </div>
+
+      <div className="col-6 sm:col-3 lg:col-3 p-fluid">
+        <LabelTh>Valor Recebido</LabelTh>
+        <InputCurrencyTh value={duplicataPagar.valorRecebido} digits={2} disabled required />
+      </div>
+
+      <div className="col-6 sm:col-3 lg:col-3 p-fluid">
+        <LabelTh>Valor Restante</LabelTh>
+        <InputCurrencyTh
+          value={duplicataPagar.valor - duplicataPagar.valorRecebido}
+          digits={2}
+          disabled
+          required
+        />
+      </div>
+
+      <div className="col-12 sm:col-12 lg:col-12 p-fluid">
+        <LabelTh>Observacão</LabelTh>
+        <InputTextareaTh
+          value={duplicataPagar.observacao}
+          disabled={viewMode() || duplicataPagar.status !== 0}
+          onChange={(e: any) => {
+            setDuplicataPagar({ ...duplicataPagar, observacao: e.target.value });
+          }}
+        />
+      </div>
+
+      {viewMode() ? renderQuitacao() : null}
 
       <div className="col-12 lg:col-12" style={{ textAlign: 'start' }}>
         {!viewMode() ? (
@@ -125,7 +251,14 @@ export default function DuplicataPagarCrud(props: IProps) {
             className="p-button-success"
             icon="pi pi-save"
             label="Salvar"
-            disabled={!validateFields(duplicataPagar, ['descricao'])}
+            disabled={
+              !validateFields(duplicataPagar, [
+                'dataCompra',
+                'dataVencimento',
+                'idFornecedor',
+                'valor',
+              ])
+            }
             showConfirmation
             onClick={handleSave}
           />
@@ -139,4 +272,60 @@ export default function DuplicataPagarCrud(props: IProps) {
       </div>
     </div>
   );
+
+  function renderQuitacao() {
+    return (
+      <>
+        <div
+          className="col-12 p-fluid"
+          style={{ textAlign: 'center', marginTop: 0, marginBottom: 0 }}
+        >
+          <hr style={{ margin: 0, padding: 0 }} />
+          <LabelTh>Quitações</LabelTh>
+        </div>
+        <div className="col-12 p-fluid">
+          <DataTableTh
+            value={duplicataPagar.duplicataPagamento}
+            style={{ marginBottom: '2px' }}
+            paginator
+            rows={5}
+          >
+            <Column
+              field="id"
+              body={(rowData) => padLeft(rowData.id, 6)}
+              header="Id"
+              className="grid-col-id"
+            />
+            <Column
+              field="dataCompra"
+              className="grid-col grid-col-data-hora"
+              header="Dt. Compra"
+              body={(rowData) => formatDate(rowData.dataPagamento, 'dd/MM/yyyy')}
+            />
+            <Column field="conta.descricao" className="grid-col" header="Conta" />
+            <Column
+              field="valor"
+              className="grid-col grid-col-curr"
+              header="Valor"
+              body={(rowData) => formatFloat(rowData.valor, 2)}
+            />
+            <Column
+              className="gid-col-acoes-35"
+              bodyStyle={{ textAlign: 'end' }}
+              // body={renderButtonOp}
+              body={(rowData) => (
+                <Button
+                  type="button"
+                  title="Estornar"
+                  className="botao-pequeno p-button-danger"
+                  icon="pi pi-trash"
+                  onClick={() => handleEstornar(rowData.id)}
+                />
+              )}
+            />
+          </DataTableTh>
+        </div>
+      </>
+    );
+  }
 }

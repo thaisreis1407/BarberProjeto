@@ -33,6 +33,9 @@ import jwt from 'jsonwebtoken';
 import { toast } from 'react-toastify';
 
 import { StateScreen } from '../pages/constants';
+import { store } from '../store';
+import { logout } from '../store/modules/auth/actions';
+import { showDialogLogin } from '../store/modules/dialog/actions';
 // import { store } from '../store';
 // import { showDialogLogin } from '../store/modules/dialog/actions';
 
@@ -250,7 +253,7 @@ export function calcHeightGraphiFromRecords(nRecord: number): number {
  * @param {boolean} ignoreSeconds Flag que indica se é para ignorar ou não os segundos
  * @returns {date} Retorna um Date contendo uma data 1970-01-01 mais a hora
  */
-export function newTimeOnly(strTime: Date, ignoreSeconds = false): Date {
+export function newTimeOnly(strTime: string, ignoreSeconds = false): Date {
   let dateLocal;
   let timeUTC;
   if (strTime) {
@@ -550,6 +553,7 @@ export function sleep(ms: number): Promise<any> {
  * @param {Object | string} error Erro a ser tratado
  */
 export function errorHandle(error: any): void {
+  console.log(error);
   let msg = '';
 
   if (typeof error === 'string') {
@@ -557,7 +561,7 @@ export function errorHandle(error: any): void {
   } else if (typeof error === 'object') {
     if (error.tokenExpired) {
       msg = 'Seu acesso expirou, é necessário fazer login';
-      // store.dispatch(showDialogLogin());
+      setTimeout(() => store.dispatch(logout()), 2000);
     } else if (error.response) {
       if (
         error.response.data &&

@@ -8,6 +8,7 @@
 import React from 'react';
 
 import AcessDenied from '../pages/AcessDenied';
+import Agenda from '../pages/Agenda';
 import Atendente from '../pages/Atendente';
 import Cliente from '../pages/Cliente';
 import Conta from '../pages/Conta';
@@ -155,6 +156,21 @@ export default function Routes() {
     roles: ['ROLE_LER_USUARIO', 'ROLE_INSERIR_USUARIO', 'ROLE_ALTERAR_USUARIO'],
     isPrivate: true,
   });
+
+  /* Agenda  */
+  routes.push({
+    path: '/agendas',
+    element: <Agenda />,
+    roles: ['ROLE_LER_AGENDA'],
+    isPrivate: true,
+  });
+  routes.push({
+    path: '/agendas/:option',
+    element: <Agenda />,
+    roles: ['ROLE_LER_AGENDA', 'ROLE_INSERIR_AGENDA', 'ROLE_ALTERAR_AGENDA'],
+    isPrivate: true,
+  });
+
   routes.push({ path: '/denied', element: <AcessDenied />, isPrivate: true });
   routes.push({ path: '*', element: <NotFound />, isPrivate: true });
 

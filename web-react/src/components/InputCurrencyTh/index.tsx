@@ -5,7 +5,7 @@ import { formatFloat, strNumBrToNumber } from '../../util/functions';
 import InputTextTh from '../InputTextTh';
 
 interface IProps extends InputTextProps {
-  onChangeNumber: (event: any, value: number) => void;
+  onChangeNumber?: (event: any, value: number) => void;
   onFocus?: (event: any) => void;
   onBlur?: (event: any) => void;
   digits?: number;
@@ -107,6 +107,7 @@ InputCurrencyTh.defaultProps = {
   onFocus: undefined,
   onBlur: undefined,
   autoFocus: false,
+  onChangeNumber: undefined,
 };
 
 export default InputCurrencyTh;

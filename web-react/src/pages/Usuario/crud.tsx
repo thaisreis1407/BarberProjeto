@@ -156,7 +156,7 @@ export default function UsuarioCrud(props: IProps) {
         <InputTextTh
           value={senha}
           maxLength={10}
-          required={!!confirmacaoSenha || !!senha}
+          required={!!confirmacaoSenha || !!senha || stateScreen === StateScreen.stInsert}
           type="password"
           disabled={viewMode()}
           onChange={(e) => {
@@ -170,7 +170,7 @@ export default function UsuarioCrud(props: IProps) {
         <InputTextTh
           value={confirmacaoSenha}
           maxLength={10}
-          required={!!confirmacaoSenha || !!senha}
+          required={!!confirmacaoSenha || !!senha || stateScreen === StateScreen.stInsert}
           type="password"
           disabled={viewMode()}
           onChange={(e) => {

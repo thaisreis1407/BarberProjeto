@@ -12,13 +12,13 @@ class AgendaService extends BaseService {
 }
 
 class Filter {
-  idMesa: number;
-  limit: 9999;
+  nome: string;
+  size: 9999;
   page: 0;
 
   constructor() {
-    this.idMesa = 0;
-    this.limit = 9999;
+    this.nome = '';
+    this.size = 9999;
     this.page = 0;
   }
 }

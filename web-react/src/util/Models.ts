@@ -81,18 +81,31 @@ export class AtendenteModel {
   inativo = false;
 }
 
+export class DuplicataPagamentoModel {
+  id = undefined;
+  id_conta = undefined;
+  id_movimentacao_conta = undefined;
+  data_pagamento = new Date();
+  valor = 0;
+  observacao = '';
+}
+
 export class DuplicataPagarModel {
   id = undefined;
-  conta = ContaModel;
+  idFornecedor = undefined;
   fornecedor = new FornecedorModel();
   valor = 0;
+  valorRecebido = 0;
   dataCompra = new Date();
   dataVencimento = new Date();
+  duplicataPagamento: DuplicataPagamentoModel[] = [];
+  status = 0;
+  observacao = '';
 }
 
 export class AgendaDetalheModel {
   id = undefined;
-  diaSemana = 0;
+  diaSemana? = 0;
   horarioInicio = new Date();
   horarioFim = new Date();
 }
@@ -100,6 +113,7 @@ export class AgendaDetalheModel {
 export class AgendaModel {
   id = undefined;
   atendente = new AtendenteModel();
+  idAtendente: undefined;
   nome = '';
   intervaloMinutos = 0;
   agendaDetalhe: AgendaDetalheModel[] = [];

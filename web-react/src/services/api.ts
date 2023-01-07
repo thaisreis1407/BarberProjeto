@@ -18,7 +18,9 @@ const api = axios.create({
 // configurando a api
 api.interceptors.request.use(
   (config: any) => {
-    const { Authorization } = config.headers;
+    const { Authorization } = config.headers.common;
+
+    // api.defaults.headers.common.
     const { url } = config;
     if (Authorization && url !== 'oauth/token') {
       const token = Authorization.split(' ')[1];
@@ -90,8 +92,8 @@ export async function checkVersaoApi(): Promise<boolean> {
     const versaoApi = Number(apiInfo ? apiInfo.apiVersion : '0');
     const versaoTextApi = apiInfo && apiInfo.version ? apiInfo.version : '';
 
-    let versao = versaoApi;
-    let versaoText = versaoTextApi;
+    const versao = versaoApi;
+    const versaoText = versaoTextApi;
     let atualizarApiInfo = false;
     const ultimaData =
       new Date(dataUltimaVersao).toString() !== 'Invalid Date'
@@ -99,11 +101,10 @@ export async function checkVersaoApi(): Promise<boolean> {
         : null;
 
     if (!ultimaData || Math.abs(differenceInMinutes(ultimaData, dataAtual)) >= 1) {
-      const data = await getApiInfo();
-
-      versao = data.versionNumber;
-      versaoText = data.version;
-      atualizarApiInfo = true;
+      // const data = await getApiInfo();
+      // versao = data.versionNumber;
+      // versaoText = data.version;
+      // atualizarApiInfo = true;
     }
 
     if (versaoApi !== versao) {

@@ -152,6 +152,7 @@ export default function createMenu(setExibindoMenu: HandleExibindoMenu): any[] {
               disabled: !AuthService.checkRoles('ROLE_LER_PARCELA_RECEBER'),
               command: (): void => {
                 navigate('/parcelas-receber');
+                setExibindoMenu(false);
               },
             },
             {
@@ -159,6 +160,7 @@ export default function createMenu(setExibindoMenu: HandleExibindoMenu): any[] {
               disabled: !AuthService.checkRoles('ROLE_LER_DUPLICATA_PAGAR'),
               command: (): void => {
                 navigate('/duplicatasPagar');
+                setExibindoMenu(false);
               },
             },
             {
@@ -166,6 +168,7 @@ export default function createMenu(setExibindoMenu: HandleExibindoMenu): any[] {
               disabled: !AuthService.checkRoles('ROLE_LER_MOVIMENTACAO_CONTA'),
               command: (): void => {
                 navigate('/movimentacoesContas');
+                setExibindoMenu(false);
               },
             },
           ],
@@ -179,6 +182,7 @@ export default function createMenu(setExibindoMenu: HandleExibindoMenu): any[] {
               disabled: !AuthService.checkRoles('ROLE_LER_AGENDAMENTO'),
               command: (): void => {
                 navigate('/agendamentoAgenda');
+                setExibindoMenu(false);
               },
             },
             {
@@ -186,6 +190,7 @@ export default function createMenu(setExibindoMenu: HandleExibindoMenu): any[] {
               disabled: !AuthService.checkRoles('ROLE_LER_AGENDAMENTO'),
               command: (): void => {
                 navigate('/agendamentos');
+                setExibindoMenu(false);
               },
             },
           ],
@@ -199,6 +204,7 @@ export default function createMenu(setExibindoMenu: HandleExibindoMenu): any[] {
               disabled: !AuthService.checkRoles('ROLE_LER_ENTRADA'),
               command: (): void => {
                 navigate('/entradas');
+                setExibindoMenu(false);
               },
             },
           ],
@@ -218,6 +224,7 @@ export default function createMenu(setExibindoMenu: HandleExibindoMenu): any[] {
               disabled: !AuthService.checkRoles('ROLE_LER_PARCELA_PAGAR'),
               command: (): void => {
                 navigate('/relatorios/pagar-rel');
+                setExibindoMenu(false);
               },
             },
             {
@@ -225,6 +232,7 @@ export default function createMenu(setExibindoMenu: HandleExibindoMenu): any[] {
               disabled: !AuthService.checkRoles('ROLE_LER_PARCELA_RECEBER'),
               command: (): void => {
                 navigate('/relatorios/receber-rel');
+                setExibindoMenu(false);
               },
             },
           ],

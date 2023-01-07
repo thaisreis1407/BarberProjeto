@@ -43,6 +43,7 @@ class AtendenteService extends BaseService<AtendenteModel> {
         order: { id: 'ASC' },
       });
     }
+
     return this.findAllPageable<AtendenteModel>(this.repository, queryParams, {
       order: { id: 'ASC' },
       relations: ['conta'],

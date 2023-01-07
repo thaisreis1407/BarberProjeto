@@ -1,16 +1,14 @@
-
+import { InputTextarea, InputTextareaProps } from 'primereact/inputtextarea';
 import React from 'react';
-import { InputTextarea } from 'primereact/inputtextarea';
 
-interface IProps {
-  required: boolean;
-  className: string;
+interface IProps extends InputTextareaProps {
+  required?: boolean;
+  className?: string;
   disabled: boolean;
-  resize: boolean;
+  resize?: boolean;
   value: string;
 }
 export default function InputTextareaTh(props: IProps) {
-
   const { value, required, disabled, className, resize, ...rest } = props;
 
   let classNames = required && !disabled ? `p-error ${className || ''}` : className || '';
@@ -29,7 +27,6 @@ export default function InputTextareaTh(props: IProps) {
   );
 }
 
-
 InputTextareaTh.defaultProps = {
   required: false,
   resize: true,
@@ -38,4 +35,5 @@ InputTextareaTh.defaultProps = {
 InputTextareaTh.defaultProps = {
   required: false,
   resize: true,
+  className: '',
 };

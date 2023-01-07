@@ -26,7 +26,7 @@ export default function BotaoMenuGrid(props: IProps) {
         <Button
           type="button"
           title="Opções"
-          className="botao-pequeno ui-button-primary"
+          className="botao-pequeno p-button-primary"
           icon="pi pi-cog"
           onClick={(event) => {
             if (menu) {
