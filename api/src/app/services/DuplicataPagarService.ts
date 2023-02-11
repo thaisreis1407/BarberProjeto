@@ -1,14 +1,12 @@
-
-
 /* eslint-disable no-param-reassign */
 // import { Like } from 'typeorm';
 
-import { StatusDupl } from "../../util/constants";
+import { StatusDupl } from '../../util/constants';
 import NotFoundException from '../exceptions/NotFoundException';
 import ValidationException from '../exceptions/ValidationException';
 import { ContaModel } from '../models/ContaModel';
 // import ValidationException from '../exceptions/ValidationException';
-import { DuplicataPagamentoModel } from "../models/DuplicataPagamentoModel";
+import { DuplicataPagamentoModel } from '../models/DuplicataPagamentoModel';
 import { DuplicataPagarModel } from '../models/DuplicataPagarModel';
 import { MovimentacaoContaModel } from '../models/MovimentacaoContaModel';
 import { ViewDuplicataPagarModel } from '../models/views/ViewDuplicataModel';
@@ -24,7 +22,8 @@ class DuplicataPagarService extends BaseService<DuplicataPagarModel> {
   viewRepository =
     this.connection.getRepository<ViewDuplicataPagarModel>(ViewDuplicataPagarModel);
 
-  duplicataPagamentoRepository = this.connection.getRepository<DuplicataPagamentoModel>(DuplicataPagamentoModel);
+  duplicataPagamentoRepository =
+    this.connection.getRepository<DuplicataPagamentoModel>(DuplicataPagamentoModel);
 
   constructor(nomeConexao = '') {
     super(nomeConexao, DuplicataPagarModel);
@@ -51,11 +50,9 @@ class DuplicataPagarService extends BaseService<DuplicataPagarModel> {
       throw new NotFoundException();
     }
 
-
-      return this.findAllPageable<ViewDuplicataPagarModel>(this.viewRepository, queryParams, {
-        order: { id: 'ASC' },
-      });
-
+    return this.findAllPageable<ViewDuplicataPagarModel>(this.viewRepository, queryParams, {
+      order: { id: 'ASC' },
+    });
 
     // return this.findAllPageable<DuplicataPagarModel>(this.repository, queryParams, {
     //   order: { id: 'ASC' },
@@ -81,9 +78,8 @@ class DuplicataPagarService extends BaseService<DuplicataPagarModel> {
   }
 
   async quitar(id: number, reqBody: DuplicataPagamentoModel): Promise<any> {
-
     const duplicataPagarExist = await this.repository.findOne(id || 0, {
-      relations: ['fornecedor']
+      relations: ['fornecedor'],
     });
 
     if (!duplicataPagarExist) {
@@ -92,17 +88,22 @@ class DuplicataPagarService extends BaseService<DuplicataPagarModel> {
     const duplicataPagamento = this.duplicataPagamentoRepository.create(reqBody);
     duplicataPagamento.idDuplicataPagar = id;
 
-    if (duplicataPagarExist.status === StatusDupl.QUITADA ) {
+    if (duplicataPagarExist.status === StatusDupl.QUITADA) {
       throw new ValidationException('Duplicata já está totalmente quitada');
     }
 
-    if (duplicataPagarExist.valorRecebido + duplicataPagamento.valor === duplicataPagarExist.valor) {
-      duplicataPagarExist.status = StatusDupl.QUITADA
-    } else if (duplicataPagarExist.valorRecebido + duplicataPagamento.valor > duplicataPagarExist.valor) {
+    if (
+      duplicataPagarExist.valorRecebido + duplicataPagamento.valor ===
+      duplicataPagarExist.valor
+    ) {
+      duplicataPagarExist.status = StatusDupl.QUITADA;
+    } else if (
+      duplicataPagarExist.valorRecebido + duplicataPagamento.valor >
+      duplicataPagarExist.valor
+    ) {
       throw new ValidationException('Valor ultrapassa ao valor a receber');
-    }
-     else {
-      duplicataPagarExist.status = StatusDupl.PARCIAL
+    } else {
+      duplicataPagarExist.status = StatusDupl.PARCIAL;
     }
 
     duplicataPagarExist.valorRecebido += duplicataPagamento.valor;
@@ -130,14 +131,17 @@ class DuplicataPagarService extends BaseService<DuplicataPagarModel> {
   }
 
   async estornar(idPagamento: number): Promise<any> {
-
-    const duplicataPagamentoExist = await this.duplicataPagamentoRepository.findOne(idPagamento || 0);
+    const duplicataPagamentoExist = await this.duplicataPagamentoRepository.findOne(
+      idPagamento || 0
+    );
 
     if (!duplicataPagamentoExist) {
       throw new NotFoundException('Duplicata Pagamento não existe');
     }
 
-    const duplicataPagar = await this.repository.findOne(duplicataPagamentoExist.idDuplicataPagar);
+    const duplicataPagar = await this.repository.findOne(
+      duplicataPagamentoExist.idDuplicataPagar
+    );
 
     if (!duplicataPagar) {
       throw new NotFoundException('Duplicata Pagar não existe');
@@ -145,11 +149,10 @@ class DuplicataPagarService extends BaseService<DuplicataPagarModel> {
 
     duplicataPagar.valorRecebido -= duplicataPagamentoExist.valor;
 
-    if (duplicataPagamentoExist.valor - duplicataPagar.valorRecebido === duplicataPagar.valor) {
-      duplicataPagar.status = StatusDupl.ABERTO
-    }
-     else {
-      duplicataPagar.status = StatusDupl.PARCIAL
+    if (duplicataPagar.valorRecebido === 0) {
+      duplicataPagar.status = StatusDupl.ABERTO;
+    } else {
+      duplicataPagar.status = StatusDupl.PARCIAL;
     }
 
     const movimentacaoContaService = new MovimentacaoContaService(this.nomeConexao);
