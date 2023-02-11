@@ -4,7 +4,7 @@ import React from 'react';
 interface IProps extends InputTextareaProps {
   required?: boolean;
   className?: string;
-  disabled: boolean;
+  disabled?: boolean;
   resize?: boolean;
   value: string;
 }
@@ -36,4 +36,5 @@ InputTextareaTh.defaultProps = {
   required: false,
   resize: true,
   className: '',
+  disabled: false,
 };

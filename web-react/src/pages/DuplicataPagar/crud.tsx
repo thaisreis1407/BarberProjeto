@@ -1,6 +1,7 @@
 import { Button } from 'primereact/button';
 import { Column } from 'primereact/column';
 import React, { useCallback, useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 import ButtonTh from '../../components/ButtonTh';
@@ -12,6 +13,7 @@ import InputTextareaTh from '../../components/InputTextareaTh';
 import InputTextTh from '../../components/InputTextTh';
 import LabelTh from '../../components/LabelTh';
 import { showMessage } from '../../components/MessageDialog';
+import AuthService from '../../services/AuthService';
 import DuplicataPagarService from '../../services/DuplicataPagarService';
 import FornecedorService from '../../services/FornecedorService';
 import {
@@ -24,6 +26,7 @@ import {
   validateFields,
 } from '../../util/functions';
 import { DuplicataPagarModel } from '../../util/Models';
+import Quitacao from '../components/Quitacao';
 import { StateScreen } from '../constants';
 
 interface IProps {
@@ -42,9 +45,9 @@ export default function DuplicataPagarCrud(props: IProps) {
 
   // states
   const [duplicataPagar, setDuplicataPagar] = useState(new DuplicataPagarModel());
-
   const [errorLoadRecord, setErrorLoadRecord] = useState(false);
   const [fornecedores, setFornecedores] = useState<IDropdownItems[]>([]);
+  const [showQuitacao, setShowQuitacao] = useState(false);
 
   // useCallbacks
   const loadRecord = useCallback(async (_id: number) => {
@@ -109,9 +112,10 @@ export default function DuplicataPagarCrud(props: IProps) {
   }
 
   function handleEstornar(id: number) {
-    showMessage('Confirmação', 'Deseja estornar quitação?', (idx: number) => {
+    showMessage('Confirmação', 'Deseja estornar quitação?', async (idx: number) => {
       if (idx === 1) {
-        // estorno
+        await DuplicataPagarService.estornar(id);
+        loadRecord(idSelected);
       }
     });
   }
@@ -136,6 +140,20 @@ export default function DuplicataPagarCrud(props: IProps) {
     }
   }
 
+  async function gerarQuitacao(camposQuitacao: any) {
+    const duplicataPagamento = {
+      idConta: camposQuitacao.idConta,
+      dataPagamento: camposQuitacao.dataQuitacao,
+      valor: camposQuitacao.valor,
+      observacao: camposQuitacao.observacao,
+    };
+
+    if (duplicataPagar.id) {
+      await DuplicataPagarService.quitar(duplicataPagar.id, duplicataPagamento);
+      loadRecord(idSelected);
+    }
+  }
+
   // useEffects
   useEffect(() => {
     loadFornecedores();
@@ -150,6 +168,18 @@ export default function DuplicataPagarCrud(props: IProps) {
   // render principal
   return (
     <div className="grid">
+      {showQuitacao ? (
+        <Quitacao
+          visible={showQuitacao}
+          setVisible={setShowQuitacao}
+          valorRestante={duplicataPagar.valor - duplicataPagar.valorRecebido}
+          dataCompra={duplicataPagar.dataCompra}
+          onConfirm={(camposQuitacao) => {
+            gerarQuitacao(camposQuitacao);
+          }}
+        />
+      ) : null}
+
       <div className="col-6 sm:col-4 lg:col-3 p-fluid">
         <LabelTh>Data Compra</LabelTh>
         <CalendarTh
@@ -283,6 +313,21 @@ export default function DuplicataPagarCrud(props: IProps) {
           <hr style={{ margin: 0, padding: 0 }} />
           <LabelTh>Quitações</LabelTh>
         </div>
+
+        <div className="col-12 sm:col-6 lg:col-6">
+          <Button
+            className="buttons"
+            title="Inserir Quitação"
+            label="Inserir Quitação"
+            icon="pi pi-plus-circle"
+            type="button"
+            onClick={() => {
+              setShowQuitacao(true);
+            }}
+            disabled={!AuthService.checkRoles('ROLE_ALTERAR_DUPLICATA_PAGAR')}
+          />
+        </div>
+
         <div className="col-12 p-fluid">
           <DataTableTh
             value={duplicataPagar.duplicataPagamento}

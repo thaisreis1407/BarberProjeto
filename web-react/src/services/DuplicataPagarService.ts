@@ -1,6 +1,7 @@
 import { addMonths } from 'date-fns';
 
 import { ConfigApi } from '../config/Constantes';
+import api from './api';
 import { BaseService } from './BaseService';
 
 class DuplicataPagarService extends BaseService {
@@ -10,6 +11,23 @@ class DuplicataPagarService extends BaseService {
 
   getFilter(): Filter {
     return new Filter();
+  }
+
+  async quitar(idDuplicataPagar: number, body: any): Promise<any> {
+    try {
+      const response = await api.put(`duplicatasPagarQuitar/${idDuplicataPagar}`, body);
+      return response.data;
+    } finally {
+      this.setLoading(false);
+    }
+  }
+  async estornar(idDuplicataPagamento: number): Promise<any> {
+    try {
+      const response = await api.put(`duplicatasPagarEstornar/${idDuplicataPagamento}`);
+      return response.data;
+    } finally {
+      this.setLoading(false);
+    }
   }
 }
 

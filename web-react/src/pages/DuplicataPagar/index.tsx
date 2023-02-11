@@ -280,7 +280,7 @@ export default function DuplicataPagar() {
                   return <span style={{ color: 'red' }}>Aberto</span>;
                 }
                 if (rowData.status === StatusDupl.PARCIAL) {
-                  return <span style={{ color: 'yellow' }}>Parcial</span>;
+                  return <span style={{ color: 'orange' }}>Parcial</span>;
                 }
                 return <span style={{ color: 'blue' }}>Quitada</span>;
               }}
@@ -291,6 +291,19 @@ export default function DuplicataPagar() {
               className="grid-col grid-col-curr"
               header="Valor"
               body={(rowData) => formatFloat(rowData.valor, 2)}
+            />
+
+            <Column
+              field="valorRecebido"
+              className="grid-col grid-col-curr"
+              header="Vr. Recebido"
+              body={(rowData) => formatFloat(rowData.valorRecebido, 2)}
+            />
+            <Column
+              field="valor"
+              className="grid-col grid-col-curr"
+              header="Vr. Restante"
+              body={(rowData) => formatFloat(rowData.valor - rowData.valorRecebido, 2)}
             />
             <Column
               className="gid-col-acoes-35"
