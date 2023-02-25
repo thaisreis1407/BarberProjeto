@@ -133,6 +133,7 @@ export class AgendamentoModel {
 
 export class EntradaModel {
   id = undefined;
+  idProdutoServico: undefined;
   produtoServico = new ProdutoServicoModel();
   dataEntrada = new Date();
   valorUnitario = 0;

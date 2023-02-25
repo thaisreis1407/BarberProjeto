@@ -10,7 +10,7 @@ import ProdutoServicoService from './ProdutoServicoService';
 
 interface IFiltroEntrada {
   id?: number;
-  nome?: any;
+  descricao?: any;
 }
 
 class EntradaService extends BaseService<EntradaModel> {
@@ -92,8 +92,8 @@ class EntradaService extends BaseService<EntradaModel> {
         retorno.id = queryParams.id;
       }
 
-      if (queryParams.nome) {
-        retorno.nome = this.iLikeUnaccent(`${queryParams.nome}%`);
+      if (queryParams.descricao) {
+        retorno.descricao = this.iLikeUnaccent(`${queryParams.descricao}%`);
       }
     }
 

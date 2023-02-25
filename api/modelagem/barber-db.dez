@@ -5,7 +5,7 @@
 <PROJECTSETTINGS>
 <COMMONSETTINGS>
 <PROJECTFILENAME>C:\Estudos Internews\Projetos_sts\barber-api\modelagem\barber-db.dez</PROJECTFILENAME>
-<MODIFIED>2022-12-02</MODIFIED>
+<MODIFIED>2023-02-24</MODIFIED>
 <CREATED>2020-09-17</CREATED>
 <CREATED2></CREATED2>
 <PROJECTNAME></PROJECTNAME>
@@ -3761,7 +3761,7 @@ inner join conta on conta.id =  at.id_conta_comissao</CODE>
 select ag.id, ag.data, ag.hora, ag.id_cliente, cliente.nome as nome_cliente, ag.id_atendente, atendente.nome as nome_atendente, ag.status, ag.observacao, ag.id_agenda, cliente.telefone, cliente.celular
 from agendamento ag
 inner join cliente on cliente.id = ag.id_cliente
-inner join atendente on atendente.id = ag.id_atendente</CODE>
+left join atendente on atendente.id = ag.id_atendente</CODE>
 </VIEW>
 <VIEW>
 <NAME>view_duplicata_pagar</NAME>

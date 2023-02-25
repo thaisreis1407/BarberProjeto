@@ -43,7 +43,6 @@ export default function createMenu(setExibindoMenu: HandleExibindoMenu): any[] {
     {
       label: 'Cadastros',
       icon: 'pi pi-folder-open',
-
       items: [
         {
           label: 'Pessoas',

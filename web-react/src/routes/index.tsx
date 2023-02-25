@@ -13,6 +13,7 @@ import Atendente from '../pages/Atendente';
 import Cliente from '../pages/Cliente';
 import Conta from '../pages/Conta';
 import DuplicataPagar from '../pages/DuplicataPagar';
+import Entrada from '../pages/Entradas';
 import FormaPagamento from '../pages/FormaPagamento';
 import Fornecedor from '../pages/Fornecedor';
 import Home from '../pages/Home';
@@ -168,6 +169,20 @@ export default function Routes() {
     path: '/agendas/:option',
     element: <Agenda />,
     roles: ['ROLE_LER_AGENDA', 'ROLE_INSERIR_AGENDA', 'ROLE_ALTERAR_AGENDA'],
+    isPrivate: true,
+  });
+
+  /* entradas  */
+  routes.push({
+    path: '/entradas',
+    element: <Entrada />,
+    roles: ['ROLE_LER_ENTRADA'],
+    isPrivate: true,
+  });
+  routes.push({
+    path: '/entradas/:option',
+    element: <Entrada />,
+    roles: ['ROLE_LER_ENTRADA', 'ROLE_INSERIR_ENTRADA', 'ROLE_ALTERAR_ENTRADA'],
     isPrivate: true,
   });
 

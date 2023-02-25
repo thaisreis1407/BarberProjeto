@@ -1,7 +1,6 @@
 import { Button } from 'primereact/button';
 import { Column } from 'primereact/column';
 import React, { useCallback, useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 import ButtonTh from '../../components/ButtonTh';

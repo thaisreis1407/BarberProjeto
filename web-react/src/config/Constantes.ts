@@ -46,6 +46,7 @@ export const ConfigApi = {
   MovimentacaoContaURL: 'movimentacoesContas',
   ProdutoServicoURL: 'produtosServicos',
   ServicoURL: 'servicos',
+  EntradaURL: 'entradas',
 };
 
 /**

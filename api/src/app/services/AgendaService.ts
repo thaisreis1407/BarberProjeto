@@ -50,6 +50,7 @@ class AgendaService extends BaseService<AgendaModel> {
   }
 
   async store(reqBody: AgendaModel): Promise<any> {
+    console.log(reqBody);
     const agenda = this.repository.create(reqBody);
 
     return this.repository.save(agenda);

@@ -10,7 +10,6 @@ import DropdownTh from '../../components/DropdownTh';
 import InputTextTh from '../../components/InputTextTh';
 import LabelTh from '../../components/LabelTh';
 import { showMessage } from '../../components/MessageDialog';
-import { cfgPtBr } from '../../config/Constantes';
 import AgendaService from '../../services/AgendaService';
 import AtendenteService from '../../services/AtendenteService';
 import AuthService from '../../services/AuthService';
@@ -22,7 +21,7 @@ import {
   newTimeOnly,
   validateFields,
 } from '../../util/functions';
-import { AgendaDetalheModel, AgendaModel, AtendenteModel } from '../../util/Models';
+import { AgendaDetalheModel, AgendaModel } from '../../util/Models';
 import { StateScreen } from '../constants';
 
 interface IProps {
@@ -45,7 +44,7 @@ export default function AgendaCrud(props: IProps) {
   const [atendentes, setAtendentes] = useState<IDropdownItems[]>([]);
 
   const [errorLoadRecord, setErrorLoadRecord] = useState(false);
-  const [atendenteSelecionado, setAtendenteSelecionado] = useState<IDropdownItems>();
+  // const [atendenteSelecionado, setAtendenteSelecionado] = useState<IDropdownItems>();
 
   const [horarioInicioSelecionada, setHoraInicioSelecionada] = useState(
     newTimeOnly('09:00:00')
@@ -105,12 +104,12 @@ export default function AgendaCrud(props: IProps) {
       setAgenda(retorno);
       setAgendaDetalhe(retorno.agendaDetalhe);
 
-      const atendente = {
-        label: retorno.atendente.nome,
-        value: retorno.atendente.id,
-      };
+      // const atendente = {
+      //   label: retorno.atendente.nome,
+      //   value: retorno.atendente.id,
+      // };
 
-      setAtendenteSelecionado(atendente);
+      // setAtendenteSelecionado(atendente);
       setErrorLoadRecord(false);
     } catch (err) {
       setErrorLoadRecord(true);
@@ -168,6 +167,7 @@ export default function AgendaCrud(props: IProps) {
     try {
       let retorno;
       const configAgendaSalvar = cloneObj(agenda);
+      configAgendaSalvar.atendente.id = configAgendaSalvar.idAtendente;
 
       configAgendaSalvar.agendaDetalhe = agendaDetalhe.map((ag) => {
         return {
