@@ -90,6 +90,7 @@ routes.put(
   auth(`ROLE_ALTERAR_${name}`),
   DuplicataPagarController.update
 );
+// fff
 routes.put(
   '/duplicatasPagarQuitar/:id',
   auth(`ROLE_ALTERAR_${name}`),
